@@ -1,5 +1,5 @@
 import {User, api} from '~app';
-import {ILogin, ILoginR} from 'types';
+import {ILogin, IAuth, ISignup} from 'types';
 import {storage} from '~utils';
 
 const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
@@ -8,24 +8,33 @@ const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
       query: () => '/accounts/profile',
       providesTags: () => ['auth'] as any,
     }),
-    login: build.mutation<ILoginR, ILogin>({
+    login: build.mutation<IAuth, ILogin>({
       query: credentials => ({
         url: '/accounts/login',
         method: 'POST',
         body: credentials,
       }),
-      async transformResponse(
-        response: ILoginR,
-        _meta,
-        _arg,
-      ): Promise<ILoginR> {
+      async transformResponse(response: IAuth, _meta, _arg): Promise<IAuth> {
         if (response?.token) {
           await storage.saveToken(response.token);
         }
-        return response as ILoginR;
+        return response as IAuth;
       },
     }),
-    editProfile: build.mutation<ILoginR, ILogin>({
+    signup: build.mutation<IAuth, ISignup>({
+      query: credentials => ({
+        url: '/accounts/register',
+        method: 'POST',
+        body: credentials,
+      }),
+      async transformResponse(response: IAuth, _meta, _arg): Promise<IAuth> {
+        if (response?.token) {
+          await storage.saveToken(response.token);
+        }
+        return response as IAuth;
+      },
+    }),
+    editProfile: build.mutation<IAuth, ILogin>({
       query: credentials => ({
         url: '/accounts/profile/update',
         method: 'POST',
@@ -42,4 +51,5 @@ export const {
   useLoginMutation,
   useLazyGetProfileQuery,
   useEditProfileMutation,
+  useSignupMutation,
 } = authApi;

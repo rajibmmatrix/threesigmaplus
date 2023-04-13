@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {ActivityIndicator, Button, StyleSheet, Text, View} from 'react-native';
-import {Input} from '~common';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {Button, Input, Link} from '~common';
+import {IMAGES} from '~constants';
 import {setCredentials, useDispatch} from '~app';
 import {useLoginMutation} from '~services';
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}: any) {
   const dispatch = useDispatch();
 
   const [login, {isLoading, isError, error}] = useLoginMutation();
@@ -21,8 +22,8 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Screen</Text>
-      {isLoading ? <ActivityIndicator /> : null}
+      <Image source={IMAGES.auth} style={styles.banner} />
+      <Text style={styles.title}>LOG IN</Text>
       {isError ? <Text>{JSON.stringify(error)}</Text> : null}
       <Input
         title="Username"
@@ -39,7 +40,23 @@ export default function LoginScreen() {
         secureTextEntry
         onChangeText={e => setform(prev => ({...prev, password: e}))}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Link
+        text="Forgot password"
+        onPress={() => navigation.navigate('Forgot')}
+        containerStyle={styles.forgot}
+      />
+      <Button
+        title="Login"
+        loading={isLoading}
+        onPress={handleLogin}
+        style={styles.link}
+      />
+      <Link
+        text="Dont have an account?"
+        link="Create"
+        onPress={() => navigation.navigate('Signup')}
+        containerStyle={styles.link}
+      />
     </View>
   );
 }
@@ -47,14 +64,29 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //alignItems: 'center',
-    //justifyContent: 'center',
+    paddingHorizontal: 15,
     backgroundColor: '#ffffff',
+  },
+  banner: {
+    height: 200,
+    width: '80%',
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    marginVertical: 20,
   },
   title: {
     fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',
     color: '#000000',
+  },
+  forgot: {
+    alignSelf: 'flex-end',
+    marginTop: 15,
+    marginRight: 10,
+  },
+  link: {
+    marginTop: 15,
+    alignSelf: 'center',
   },
 });
