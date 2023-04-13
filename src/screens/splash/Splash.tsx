@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
+import {IMAGES} from '~constants';
 import {setToken, setUser, useDispatch} from '~app';
 import {useLazyGetProfileQuery} from '~services';
 import {storage} from '~utils';
@@ -33,7 +34,7 @@ export default function SplashScreen({onFinished}: Props): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Splash Screen</Text>
+      <Image source={IMAGES.splash} style={styles.image} />
     </View>
   );
 }
@@ -41,13 +42,11 @@ export default function SplashScreen({onFinished}: Props): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#ffffff',
   },
-  title: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: '#000000',
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import Splash from 'react-native-splash-screen';
 import AppNavigation from './AppNavigation';
 import AuthNavigation from './AuthNavigation';
 import {SplashScreen} from '~screens';
@@ -14,6 +15,7 @@ export default function Navigation(): JSX.Element {
       <SplashScreen
         onFinished={() => {
           setIsLoading(false);
+          Splash.hide();
         }}
       />
     );
