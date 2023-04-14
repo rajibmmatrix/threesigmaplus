@@ -1,23 +1,27 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {Button} from '~common';
+import {Button, Container} from '~common';
 import {logout, useDispatch} from '~app';
-import {storage} from '~utils';
+import {useLazyLogoutQuery} from '~services';
 import {TabScreenProps} from 'types';
 
 export default function ProfileScreen({}: TabScreenProps<'Profile'>) {
   const dispatch = useDispatch();
+  const [logoutapi, {isLoading}] = useLazyLogoutQuery();
 
-  const handleLogout = async () => {
-    await storage.removeToken();
-    dispatch(logout());
+  const handleLogout = () => {
+    logoutapi().then(() => {
+      dispatch(logout());
+    });
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Profile Screen</Text>
-      <Button title="Logout" onPress={handleLogout} />
-    </View>
+    <Container isLoading={isLoading} scrollEnabled={false}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Profile Screen</Text>
+        <Button title="Logout" onPress={handleLogout} />
+      </View>
+    </Container>
   );
 }
 
@@ -26,7 +30,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
   },
   title: {
     fontSize: 18,

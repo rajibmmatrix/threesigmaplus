@@ -42,6 +42,13 @@ const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
       }),
       invalidatesTags: ['auth'] as any,
     }),
+    logout: build.query<void, void>({
+      query: () => ({url: '/accounts/logout', method: 'POST'}),
+      async transformResponse(response: void, _meta, _arg): Promise<void> {
+        await storage.removeToken();
+        return response as void;
+      },
+    }),
   }),
   overrideExisting: false,
 });
@@ -52,4 +59,5 @@ export const {
   useLazyGetProfileQuery,
   useEditProfileMutation,
   useSignupMutation,
+  useLazyLogoutQuery,
 } = authApi;
