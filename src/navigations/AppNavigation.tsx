@@ -8,8 +8,9 @@ import {
   PreferenceScreen,
   TopicsScreen,
 } from '~screens';
+import {StackParamList} from 'types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function AppNavigation() {
   return (

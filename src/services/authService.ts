@@ -1,6 +1,6 @@
-import {User, api} from '~app';
-import {ILogin, IAuth, ISignup} from 'types';
+import {api} from '~app';
 import {storage} from '~utils';
+import {ILogin, IAuth, ISignup, User} from 'types';
 
 const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
   endpoints: build => ({

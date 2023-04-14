@@ -7,12 +7,13 @@ import {
   ProfileScreen,
   SubjectsScreen,
 } from '~screens';
+import {StackScreenProps, TabParamList} from 'types';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
 
-export default function TabNavigation() {
+export default function TabNavigation({}: StackScreenProps<'Tab'>) {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Home">
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Notification" component={NotificationScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />

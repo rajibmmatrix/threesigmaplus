@@ -4,8 +4,9 @@ import {Button, Input, Link} from '~common';
 import {IMAGES} from '~constants';
 import {setCredentials, useDispatch} from '~app';
 import {useLoginMutation} from '~services';
+import {StackScreenProps} from 'types';
 
-export default function LoginScreen({navigation}: any) {
+export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
   const dispatch = useDispatch();
 
   const [login, {isLoading, isError, error}] = useLoginMutation();

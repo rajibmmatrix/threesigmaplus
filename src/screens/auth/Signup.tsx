@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {Button, Input, Link} from '~common';
+import {Image, StyleSheet, Text} from 'react-native';
+import {Button, Container, Input, Link} from '~common';
 import {IMAGES} from '~constants';
 import {setToken, useDispatch} from '~app';
 import {useSignupMutation} from '~services';
@@ -27,7 +27,7 @@ export default function SignupScreen({navigation}: any) {
   };
 
   return (
-    <View style={styles.container}>
+    <Container isLoading={isLoading} style={styles.container}>
       <Image source={IMAGES.auth} style={styles.banner} />
       <Text style={styles.title}>CREATE YOUR ACCOUNT</Text>
       {isError ? <Text>{JSON.stringify(error)}</Text> : null}
@@ -35,14 +35,12 @@ export default function SignupScreen({navigation}: any) {
         title="First Name"
         placeholder="Enter your first name"
         value={form.first_name}
-        autoCapitalize="none"
         onChangeText={e => setform(prev => ({...prev, first_name: e}))}
       />
       <Input
         title="Last Name"
         placeholder="Enter your last name"
         value={form.last_name}
-        autoCapitalize="none"
         onChangeText={e => setform(prev => ({...prev, last_name: e}))}
       />
       <Input
@@ -80,15 +78,13 @@ export default function SignupScreen({navigation}: any) {
         onPress={() => navigation.navigate('Login')}
         containerStyle={styles.link}
       />
-    </View>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingHorizontal: 15,
-    backgroundColor: '#ffffff',
   },
   banner: {
     height: 200,
