@@ -1,16 +1,44 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {Button, Input, Link} from '~common';
+import {Image, Keyboard, StyleSheet, Text} from 'react-native';
+import {Button, Container, Input, Link} from '~common';
 import {IMAGES} from '~constants';
 import {setCredentials, useDispatch} from '~app';
 import {useLoginMutation} from '~services';
-import {StackScreenProps} from 'types';
+import {isPassword} from '~utils';
+import {ILogin, StackScreenProps} from 'types';
+
+interface IErrors {
+  username?: string;
+  password?: string;
+}
 
 export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
   const dispatch = useDispatch();
 
   const [login, {isLoading, isError, error}] = useLoginMutation();
-  const [form, setform] = useState({username: '', password: ''});
+  const [form, setform] = useState<ILogin>({username: '', password: ''});
+  const [errors, setErrors] = useState<IErrors>({});
+
+  const validate = () => {
+    Keyboard.dismiss();
+    let isHaveError = false;
+    setErrors({});
+    if (!form.username) {
+      isHaveError = true;
+      handleError('username', 'Please enter username');
+    }
+    if (!form.password) {
+      isHaveError = true;
+      handleError('password', 'Please enter password');
+    } else if (!isPassword(form.password)) {
+      isHaveError = true;
+      handleError('password', 'Password must be more then 8 character long');
+    }
+    if (isHaveError) {
+      return;
+    }
+    handleLogin();
+  };
 
   const handleLogin = () => {
     login(form)
@@ -21,25 +49,35 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
       .catch((err: any) => console.log('Err:', err?.data));
   };
 
+  const handleChange = (name: string, value: string) => {
+    setform(prev => ({...prev, [name]: value}));
+  };
+
+  const handleError = (name: string, value: string) => {
+    setErrors(prev => ({...prev, [name]: value}));
+  };
+
   return (
-    <View style={styles.container}>
+    <Container style={styles.container}>
       <Image source={IMAGES.auth} style={styles.banner} />
       <Text style={styles.title}>LOG IN</Text>
       {isError ? <Text>{JSON.stringify(error)}</Text> : null}
       <Input
-        title="Username"
+        label="Username"
         placeholder="Enter Username"
         value={form.username}
         autoCapitalize="none"
-        onChangeText={e => setform(prev => ({...prev, username: e}))}
+        onChangeText={e => handleChange('username', e)}
+        error={errors?.username}
       />
       <Input
-        title="Password"
+        label="Password"
         placeholder="Enter Password"
         value={form.password}
         autoCapitalize="none"
         secureTextEntry
-        onChangeText={e => setform(prev => ({...prev, password: e}))}
+        onChangeText={e => handleChange('password', e)}
+        error={errors?.password}
       />
       <Link
         text="Forgot password"
@@ -49,7 +87,7 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
       <Button
         title="Login"
         loading={isLoading}
-        onPress={handleLogin}
+        onPress={validate}
         style={styles.link}
       />
       <Link
@@ -58,15 +96,13 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
         onPress={() => navigation.navigate('Signup')}
         containerStyle={styles.link}
       />
-    </View>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingHorizontal: 15,
-    backgroundColor: '#ffffff',
   },
   banner: {
     height: 200,
@@ -82,9 +118,8 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   forgot: {
-    alignSelf: 'flex-end',
-    marginTop: 15,
     marginRight: 10,
+    alignSelf: 'flex-end',
   },
   link: {
     marginTop: 15,

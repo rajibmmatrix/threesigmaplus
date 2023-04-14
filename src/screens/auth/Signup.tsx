@@ -1,15 +1,28 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text} from 'react-native';
-import {Button, Container, Input, Link} from '~common';
+import {Image, Keyboard, StyleSheet, Text} from 'react-native';
+import {Button, Checkbox, Container, Input, Link} from '~common';
 import {IMAGES} from '~constants';
-import {setToken, useDispatch} from '~app';
+import {setCredentials, useDispatch} from '~app';
 import {useSignupMutation} from '~services';
-import {ISignup} from 'types';
+import {ISignup, StackScreenProps} from 'types';
+import {isPassword} from '~utils';
 
-export default function SignupScreen({navigation}: any) {
+interface IErrors {
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+  email?: string;
+  password1?: string;
+  password2?: string;
+  checkedTandS?: string;
+}
+
+export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
   const dispatch = useDispatch();
 
   const [signup, {isLoading, isError, error}] = useSignupMutation();
+  const [errors, setErrors] = useState<IErrors>({});
+  const [tandc, setTandc] = useState<boolean>(false);
   const [form, setform] = useState<ISignup>({
     first_name: '',
     last_name: '',
@@ -19,10 +32,58 @@ export default function SignupScreen({navigation}: any) {
     password2: '',
   });
 
+  const validate = () => {
+    Keyboard.dismiss();
+    let isHaveError = false;
+    setErrors({});
+    if (!form.first_name) {
+      isHaveError = true;
+      handleError('first_name', 'Please enter first name');
+    }
+    if (!form.last_name) {
+      isHaveError = true;
+      handleError('last_name', 'Please enter last name');
+    }
+    if (!form.username) {
+      isHaveError = true;
+      handleError('username', 'Please enter username');
+    }
+    if (!form.email) {
+      isHaveError = true;
+      handleError('email', 'Please enter email');
+    }
+    if (!form.password1) {
+      isHaveError = true;
+      handleError('password1', 'Please enter password');
+    } else if (!isPassword(form.password1)) {
+      isHaveError = true;
+      handleError('password1', 'Password must be more then 8 character long');
+    }
+    if (!form.password2) {
+      isHaveError = true;
+      handleError('password2', 'Please re-type password');
+    } else if (form.password1 !== form.password2) {
+      isHaveError = true;
+      handleError('password2', 'Re-type Password not match');
+    }
+    if (!tandc) {
+      isHaveError = true;
+      handleError('checkedTandS', 'Please accept term & condition');
+    }
+    if (isHaveError) {
+      return;
+    }
+    handleSignup();
+  };
+
+  const handleError = (name: string, value: string) => {
+    setErrors(prev => ({...prev, [name]: value}));
+  };
+
   const handleSignup = () => {
     signup(form)
       .unwrap()
-      .then(({token}) => dispatch(setToken(token)))
+      .then(({token, user}) => dispatch(setCredentials({token, user})))
       .catch((err: any) => console.log('Err:', err?.data));
   };
 
@@ -32,44 +93,64 @@ export default function SignupScreen({navigation}: any) {
       <Text style={styles.title}>CREATE YOUR ACCOUNT</Text>
       {isError ? <Text>{JSON.stringify(error)}</Text> : null}
       <Input
-        title="First Name"
+        label="First Name"
         placeholder="Enter your first name"
         value={form.first_name}
+        error={errors?.first_name}
         onChangeText={e => setform(prev => ({...prev, first_name: e}))}
       />
       <Input
-        title="Last Name"
+        label="Last Name"
         placeholder="Enter your last name"
         value={form.last_name}
+        error={errors?.last_name}
         onChangeText={e => setform(prev => ({...prev, last_name: e}))}
       />
       <Input
-        title="Username"
-        placeholder="Enter Username"
+        label="Username"
+        placeholder="Enter username"
         value={form.username}
+        error={errors?.username}
         autoCapitalize="none"
         onChangeText={e => setform(prev => ({...prev, username: e}))}
       />
       <Input
-        title="Password"
-        placeholder="Enter Password"
-        value={form.password1}
+        label="Email"
+        placeholder="Enter Email"
+        value={form.email}
+        error={errors?.email}
         autoCapitalize="none"
-        secureTextEntry
-        onChangeText={e => setform(prev => ({...prev, password: e}))}
+        onChangeText={e => setform(prev => ({...prev, email: e}))}
       />
       <Input
-        title="Password"
+        label="Password"
         placeholder="Enter Password"
+        value={form.password1}
+        error={errors?.password1}
+        autoCapitalize="none"
+        secureTextEntry
+        onChangeText={e => setform(prev => ({...prev, password1: e}))}
+      />
+      <Input
+        label="Re-type Password"
+        placeholder="Re-type your password"
         value={form.password2}
+        error={errors?.password2}
         autoCapitalize="none"
         secureTextEntry
         onChangeText={e => setform(prev => ({...prev, password2: e}))}
       />
+      <Checkbox
+        isChecked={tandc}
+        onPress={() => setTandc(prev => !prev)}
+        label="I agree to the terms and condition and privacy policy of 3 Sigma Plus"
+        containerStyle={styles.checkbox}
+        error={errors.checkedTandS}
+      />
       <Button
-        title="Sign in"
+        title="Sign up"
         loading={isLoading}
-        onPress={handleSignup}
+        onPress={validate}
         style={styles.link}
       />
       <Link
@@ -98,6 +179,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     color: '#000000',
+    marginBottom: 20,
   },
   forgot: {
     alignSelf: 'flex-end',
@@ -105,7 +187,11 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   link: {
-    marginTop: 15,
+    marginTop: 20,
     alignSelf: 'center',
+  },
+  checkbox: {
+    marginVertical: 5,
+    paddingHorizontal: 10,
   },
 });

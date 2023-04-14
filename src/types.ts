@@ -43,7 +43,7 @@ export type StackScreenProps<Screen extends keyof StackParamList> =
   NativeStackScreenProps<StackParamList, Screen>;
 
 //For Tab Screens
-export type SideScreenProps<Screen extends keyof TabParamList> =
+export type TabScreenProps<Screen extends keyof TabParamList> =
   CompositeScreenProps<
     BottomTabScreenProps<TabParamList, Screen>,
     NativeStackScreenProps<StackParamList>
@@ -52,6 +52,8 @@ export type SideScreenProps<Screen extends keyof TabParamList> =
 export interface User {
   first_name: string;
   last_name: string;
+  email: string;
+  username: string;
 }
 
 //For Login request

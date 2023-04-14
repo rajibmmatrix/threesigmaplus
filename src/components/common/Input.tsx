@@ -1,15 +1,25 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text, TextInput, TextInputProps, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 interface Props extends TextInputProps {
-  title: string;
+  label: string;
+  error?: string;
+  containerStyle?: ViewStyle;
 }
 
-const Input: FC<Props> = props => {
+const Input: FC<Props> = ({label, error, containerStyle = {}, ...props}) => {
   return (
-    <View style={styles.body}>
-      <Text style={styles.title}>{props.title}</Text>
+    <View style={[styles.body, containerStyle]}>
+      <Text style={styles.title}>{label}</Text>
       <TextInput {...props} style={[styles.title, styles.input]} />
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
@@ -17,19 +27,21 @@ const Input: FC<Props> = props => {
 export default Input;
 
 const styles = StyleSheet.create({
-  body: {
-    height: 80,
-    padding: 10,
-    marginTop: 10,
-  },
+  body: {padding: 10, paddingVertical: 5},
   title: {
     fontSize: 16,
     fontWeight: '500',
     color: '#000000',
     marginBottom: 6,
   },
+  error: {
+    fontSize: 15,
+    fontWeight: '400',
+    color: '#f00',
+    marginTop: 5,
+  },
   input: {
-    height: 50,
+    height: 48,
     width: '100%',
     borderWidth: 1,
     borderRadius: 10,

@@ -1,5 +1,5 @@
 import React, {FC, memo} from 'react';
-import {StyleSheet, View, ViewStyle} from 'react-native';
+import {View, ViewStyle} from 'react-native';
 
 interface Props {
   height?: number | string;
@@ -15,13 +15,7 @@ const Space: FC<Props> = ({height, width, style = {}}) => {
   if (width) {
     hw = {...hw, width};
   }
-  return <View style={[styles.container, style, hw]} />;
+  return <View style={[style, hw]} />;
 };
 
 export default memo(Space);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
