@@ -3,11 +3,11 @@ import type {PropsWithChildren} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import Loader from './Loader';
 import {COLORS} from '~constants';
 import Space from './Space';

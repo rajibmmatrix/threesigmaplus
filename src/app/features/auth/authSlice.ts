@@ -5,11 +5,13 @@ import {User} from 'types';
 interface AuthState {
   user: User | null;
   token: string | null;
+  isFromSignup?: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
   token: null,
+  isFromSignup: false,
 };
 
 export const authSlice = createSlice({
@@ -22,6 +24,9 @@ export const authSlice = createSlice({
     setToken: (state, {payload}: PayloadAction<string>) => {
       state.token = payload;
     },
+    setIsSignup: (state, {payload}: PayloadAction<boolean>) => {
+      state.isFromSignup = payload;
+    },
     setCredentials: (state, {payload}: PayloadAction<AuthState>) => {
       state.user = payload.user;
       state.token = payload.token;
@@ -33,6 +38,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const {setUser, setToken, setCredentials, logout} = authSlice.actions;
+export const {setUser, setToken, setIsSignup, setCredentials, logout} =
+  authSlice.actions;
 
 export default authSlice.reducer;

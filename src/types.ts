@@ -26,7 +26,7 @@ export type AppParamList = {
   EditProfile: undefined;
   MyPerformance: undefined;
   Preference: undefined;
-  Topics: undefined;
+  Topics: {subject_id: string} | undefined;
 };
 
 //For Tab Navigations
@@ -54,12 +54,22 @@ export interface User {
   last_name: string;
   email: string;
   username: string;
+  preference_course_id: string | null;
+  year: string | null;
 }
 
 //For Login request
 export interface ILogin {
   username: string;
   password: string;
+}
+
+export interface IEditProfile {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  username?: string;
+  preference_course_id?: string | null;
 }
 
 //For Signup request
@@ -76,4 +86,32 @@ export interface ISignup {
 export interface IAuth {
   user: User;
   token: string;
+}
+
+export interface ICourses {
+  id: string;
+  title: string;
+}
+
+export interface ISubject {
+  id: string;
+  title: string;
+}
+
+export interface ITopics {
+  subject_id: string;
+  id: string;
+  title: string;
+}
+
+export interface IChapters {
+  topic_id: string;
+  id: string;
+  title: string;
+}
+
+export interface IConcepts {
+  sub_topic_id: string;
+  id: string;
+  title: string;
 }

@@ -14,7 +14,9 @@ const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function AppNavigation() {
   return (
-    <Stack.Navigator initialRouteName="Tab">
+    <Stack.Navigator
+      initialRouteName="Tab"
+      screenOptions={{orientation: 'portrait'}}>
       <Stack.Screen
         name="Tab"
         component={TabNavigation}

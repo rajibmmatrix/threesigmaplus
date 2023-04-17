@@ -1,11 +1,35 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {Container, Subject} from '~components';
+import {useGetSubjectQuery} from '~services';
+import {TabScreenProps} from 'types';
 
-export default function SubjectsScreen() {
+export default function SubjectsScreen({
+  navigation,
+}: TabScreenProps<'Subjects'>) {
+  const {data, isLoading, isError, error} = useGetSubjectQuery();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Subjects Screen</Text>
-    </View>
+    <Container isLoading={isLoading} scrollEnabled={false}>
+      {isError ? (
+        <View style={styles.container}>
+          <Text style={styles.title}>{error?.message}</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={item => item?.id}
+          renderItem={({item}) => (
+            <Subject
+              title={item?.title}
+              onPress={() => {
+                navigation.navigate('Topics', {subject_id: item?.id});
+              }}
+            />
+          )}
+        />
+      )}
+    </Container>
   );
 }
 
@@ -14,7 +38,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
   },
   title: {
     fontSize: 18,

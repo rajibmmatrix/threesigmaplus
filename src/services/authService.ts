@@ -1,6 +1,6 @@
 import {api} from '~app';
 import {storage} from '~utils';
-import {ILogin, IAuth, ISignup, User} from 'types';
+import {ILogin, IAuth, ISignup, User, IEditProfile} from 'types';
 
 const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
   endpoints: build => ({
@@ -34,7 +34,7 @@ const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
         return response as IAuth;
       },
     }),
-    editProfile: build.mutation<IAuth, ILogin>({
+    editProfile: build.mutation<IAuth, IEditProfile>({
       query: credentials => ({
         url: '/accounts/profile/update',
         method: 'POST',

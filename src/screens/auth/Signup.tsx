@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text} from 'react-native';
 import {Button, Checkbox, Container, Input, Link} from '~common';
 import {IMAGES} from '~constants';
-import {setCredentials, useDispatch} from '~app';
+import {setCredentials, setIsSignup, useDispatch} from '~app';
 import {useSignupMutation} from '~services';
 import {ISignup, StackScreenProps} from 'types';
 import {isPassword} from '~utils';
@@ -83,7 +83,10 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
   const handleSignup = () => {
     signup(form)
       .unwrap()
-      .then(({token, user}) => dispatch(setCredentials({token, user})))
+      .then(({token, user}) => {
+        dispatch(setIsSignup(true));
+        dispatch(setCredentials({token, user}));
+      })
       .catch((err: any) => console.log('Err:', err?.data));
   };
 

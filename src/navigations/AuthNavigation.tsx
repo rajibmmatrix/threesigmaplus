@@ -9,7 +9,7 @@ export default function AuthNavigation() {
   return (
     <Stack.Navigator
       initialRouteName="Login"
-      screenOptions={{headerShown: false}}>
+      screenOptions={{headerShown: false, orientation: 'portrait'}}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Forgot" component={ForgotScreen} />

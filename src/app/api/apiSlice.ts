@@ -1,9 +1,21 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryFn,
+  FetchArgs,
+  createApi,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
 import {RootState} from '~app';
+
+type CustomizedFetchBaseQueryError = {
+  message?: string;
+  errors?: {[key: string]: string};
+};
 
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({
+  baseQuery: <
+    BaseQueryFn<string | FetchArgs, unknown, CustomizedFetchBaseQueryError, {}>
+  >fetchBaseQuery({
     baseUrl: 'https://dev.threesigmaplus.com',
     prepareHeaders: (headers, {getState}) => {
       const token = (getState() as RootState).auth.token;
