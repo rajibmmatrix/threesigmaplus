@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {ZoomImage} from '~shared';
 import {TabScreenProps} from 'types';
 
 export default function HomeScreen({}: TabScreenProps<'Home'>) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home Screen</Text>
+      <ZoomImage uri="https://avatars2.githubusercontent.com/u/7970947?v=3&s=460" />
     </View>
   );
 }

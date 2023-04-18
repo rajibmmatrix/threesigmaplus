@@ -8,6 +8,7 @@ import {
   PreferenceScreen,
   TopicsScreen,
 } from '~screens';
+import {ZoomScreen} from '~shared';
 import {StackParamList} from 'types';
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -27,6 +28,13 @@ export default function AppNavigation() {
       <Stack.Screen name="MyPerformance" component={MyPerformanceScreen} />
       <Stack.Screen name="Preference" component={PreferenceScreen} />
       <Stack.Screen name="Topics" component={TopicsScreen} />
+      <Stack.Group screenOptions={{presentation: 'fullScreenModal'}}>
+        <Stack.Screen
+          name="Zoom"
+          component={ZoomScreen}
+          options={{headerShown: false}}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }

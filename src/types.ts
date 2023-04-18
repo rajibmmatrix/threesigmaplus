@@ -27,6 +27,7 @@ export type AppParamList = {
   MyPerformance: undefined;
   Preference: undefined;
   Topics: {subject_id: string} | undefined;
+  Zoom: {image: string} | undefined;
 };
 
 //For Tab Navigations
