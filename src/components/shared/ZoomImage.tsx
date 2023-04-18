@@ -2,14 +2,13 @@ import React, {FC, memo, useEffect, useState} from 'react';
 import {
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {useNavigation} from '@react-navigation/native';
-import {COLORS} from '~constants';
+import {COLORS, Icons} from '~constants';
 import {StackScreenProps} from 'types';
 
 interface Props {
@@ -54,10 +53,12 @@ export function ZoomScreen({navigation, route}: StackScreenProps<'Zoom'>) {
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.close}>
-        <Text style={styles.closeTitle}>Close</Text>
+        <Icons.Close width={22} height={22} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => setIsPortrait(p => !p)}>
-        <Text style={styles.button}>hi</Text>
+      <TouchableOpacity
+        onPress={() => setIsPortrait(p => !p)}
+        style={styles.button}>
+        <Icons.Rotate width={22} height={22} />
       </TouchableOpacity>
     </View>
   );
@@ -73,19 +74,19 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   button: {
-    position: 'absolute',
-    color: COLORS.light,
     right: 10,
     bottom: 10,
-  },
-  close: {
+    padding: 5,
     position: 'absolute',
     color: COLORS.light,
-    right: 10,
-    top: 10,
   },
-  closeTitle: {
-    fontSize: 16,
+  close: {
+    top: 15,
+    right: 12,
+    padding: 2,
+    position: 'absolute',
     color: COLORS.light,
+    backgroundColor: COLORS.light,
+    borderRadius: 50,
   },
 });
