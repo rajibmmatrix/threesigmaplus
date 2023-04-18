@@ -65,6 +65,11 @@ export interface ILogin {
   password: string;
 }
 
+export interface IChangePassword {
+  old_password: string;
+  new_password: string;
+}
+
 export interface IEditProfile {
   first_name?: string;
   last_name?: string;

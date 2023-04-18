@@ -1,6 +1,13 @@
 import {api} from '~app';
 import {storage} from '~utils';
-import {ILogin, IAuth, ISignup, User, IEditProfile} from 'types';
+import {
+  ILogin,
+  IAuth,
+  ISignup,
+  User,
+  IEditProfile,
+  IChangePassword,
+} from 'types';
 
 const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
   endpoints: build => ({
@@ -42,6 +49,13 @@ const authApi = api.enhanceEndpoints({addTagTypes: ['auth']}).injectEndpoints({
       }),
       invalidatesTags: ['auth'] as any,
     }),
+    changePassword: build.mutation<void, IChangePassword>({
+      query: credentials => ({
+        url: '/accounts/profile/password/change',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
     logout: build.query<void, void>({
       query: () => ({url: '/accounts/logout', method: 'POST'}),
       async transformResponse(response: void, _meta, _arg): Promise<void> {
@@ -60,4 +74,5 @@ export const {
   useEditProfileMutation,
   useSignupMutation,
   useLazyLogoutQuery,
+  useChangePasswordMutation,
 } = authApi;
