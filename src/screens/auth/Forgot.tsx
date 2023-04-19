@@ -1,26 +1,56 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {Button, Container, Input, Link} from '~common';
+import {COLORS, IMAGES} from '~constants';
 import {StackScreenProps} from 'types';
 
-export default function ForgotScreen({}: StackScreenProps<'Forgot'>) {
+export default function ForgotScreen({navigation}: StackScreenProps<'Forgot'>) {
+  const handleForgot = () => {};
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Forgot Screen</Text>
-    </View>
+    <Container scrollEnabled>
+      <Image source={IMAGES.auth} style={styles.banner} />
+      <Text style={styles.title}>Forgot Password?</Text>
+      <View style={styles.body}>
+        <Input
+          label="Email"
+          placeholder="Enter email id"
+          autoCapitalize="none"
+        />
+        <Button title="Submit" onPress={handleForgot} style={styles.link} />
+        <Link
+          text="Don't have account? "
+          link="Create now"
+          onPress={() => navigation.navigate('Signup')}
+          containerStyle={styles.link}
+          textStyle={styles.linkText}
+          linkStyle={styles.linkText}
+        />
+      </View>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
+  banner: {
+    height: 250,
+    width: '90%',
+    resizeMode: 'stretch',
+    alignSelf: 'center',
   },
   title: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 26,
+    fontWeight: '400',
     textAlign: 'center',
-    color: '#000000',
+    color: COLORS.primary_title,
   },
+  body: {
+    marginTop: 25,
+    paddingHorizontal: 20,
+  },
+  link: {
+    marginTop: 25,
+    alignSelf: 'center',
+  },
+  linkText: {fontSize: 16},
 });
