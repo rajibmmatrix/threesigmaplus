@@ -1,20 +1,36 @@
 import React, {FC, memo} from 'react';
-import {StyleSheet, Text, TouchableOpacity, ViewStyle} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
+import {COLORS} from '~constants';
 
 interface Props {
   text?: string;
   link?: string;
   onPress: () => void;
   containerStyle?: ViewStyle;
+  textStyle?: TextStyle;
+  linkStyle?: TextStyle;
 }
 
-const Link: FC<Props> = ({text, link, onPress, containerStyle = {}}) => {
+const Link: FC<Props> = ({
+  text,
+  link,
+  onPress,
+  containerStyle = {},
+  textStyle = {},
+  linkStyle = {},
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.container, containerStyle]}>
-      <Text style={styles.text}>{text}</Text>
-      <Text style={styles.link}>{link}</Text>
+      <Text style={[styles.text, textStyle]}>{text}</Text>
+      <Text style={[styles.link, linkStyle]}>{link}</Text>
     </TouchableOpacity>
   );
 };
@@ -28,11 +44,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#000',
+    fontWeight: '400',
+    color: COLORS.primary_title,
   },
   link: {
-    color: 'blue',
-    textDecorationLine: 'underline',
+    color: COLORS.primary_button,
   },
 });

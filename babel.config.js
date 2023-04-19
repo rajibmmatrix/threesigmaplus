@@ -18,7 +18,6 @@ module.exports = {
           '~constants': './src/constants',
           '~navigations': './src/navigations',
           '~screens': './src/screens',
-          '~styles': './src/styles',
           '~services': './src/services',
           '~utils': './src/utils',
           '~src': './src/',

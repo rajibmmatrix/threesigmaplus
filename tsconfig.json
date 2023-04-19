@@ -15,7 +15,6 @@
       "~constants": ["./src/constants/index"],
       "~navigations": ["./src/navigations/index"],
       "~screens": ["./src/screens/index"],
-      "~styles": ["./src/styles/index"],
       "~services": ["./src/services/index"],
       "~utils": ["./src/utils/index"],
       "~src/*": ["./src/*"],

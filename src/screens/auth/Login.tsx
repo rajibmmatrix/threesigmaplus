@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Image, Keyboard, StyleSheet, Text} from 'react-native';
+import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
 import {Button, Container, Input, Link} from '~common';
-import {IMAGES} from '~constants';
+import {COLORS, IMAGES} from '~constants';
 import {setCredentials, useDispatch} from '~app';
 import {useLoginMutation} from '~services';
 import {isPassword} from '~utils';
@@ -19,7 +19,7 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
   const [form, setform] = useState<ILogin>({username: '', password: ''});
   const [errors, setErrors] = useState<IErrors>({});
 
-  const validate = () => {
+  const handleLogin = () => {
     Keyboard.dismiss();
     let isHaveError = false;
     setErrors({});
@@ -37,10 +37,6 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
     if (isHaveError) {
       return;
     }
-    handleLogin();
-  };
-
-  const handleLogin = () => {
     login(form)
       .unwrap()
       .then(({user, token}) => {
@@ -58,71 +54,77 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
   };
 
   return (
-    <Container style={styles.container}>
+    <Container scrollEnabled>
       <Image source={IMAGES.auth} style={styles.banner} />
-      <Text style={styles.title}>LOG IN</Text>
-      {isError ? <Text>{JSON.stringify(error)}</Text> : null}
-      <Input
-        label="Username"
-        placeholder="Enter Username"
-        value={form.username}
-        autoCapitalize="none"
-        onChangeText={e => handleChange('username', e)}
-        error={errors?.username}
-      />
-      <Input
-        label="Password"
-        placeholder="Enter Password"
-        value={form.password}
-        autoCapitalize="none"
-        secureTextEntry
-        onChangeText={e => handleChange('password', e)}
-        error={errors?.password}
-      />
-      <Link
-        text="Forgot password"
-        onPress={() => navigation.navigate('Forgot')}
-        containerStyle={styles.forgot}
-      />
-      <Button
-        title="Login"
-        loading={isLoading}
-        onPress={validate}
-        style={styles.link}
-      />
-      <Link
-        text="Dont have an account?"
-        link="Create"
-        onPress={() => navigation.navigate('Signup')}
-        containerStyle={styles.link}
-      />
+      <Text style={styles.title}>Welcome back!</Text>
+      <View style={styles.body}>
+        {isError ? <Text>{JSON.stringify(error)}</Text> : null}
+        <Input
+          label="Username"
+          placeholder="Enter username"
+          value={form.username}
+          autoCapitalize="none"
+          onChangeText={e => handleChange('username', e)}
+          error={errors?.username}
+        />
+        <Input
+          placeholder="Password"
+          value={form.password}
+          autoCapitalize="none"
+          secureTextEntry
+          onChangeText={e => handleChange('password', e)}
+          error={errors?.password}
+          containerStyle={styles.password}
+        />
+        <Link
+          link="Forgot Password?"
+          onPress={() => navigation.navigate('Forgot')}
+          containerStyle={styles.forgot}
+        />
+        <Button
+          title="Login"
+          loading={isLoading}
+          onPress={handleLogin}
+          style={styles.link}
+        />
+        <Link
+          text="Don't have account? "
+          link="Create now"
+          onPress={() => navigation.navigate('Signup')}
+          containerStyle={styles.link}
+          textStyle={styles.linkText}
+          linkStyle={styles.linkText}
+        />
+      </View>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 15,
-  },
   banner: {
-    height: 200,
-    width: '80%',
-    resizeMode: 'contain',
+    height: 250,
+    width: '90%',
+    resizeMode: 'stretch',
     alignSelf: 'center',
-    marginVertical: 20,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 26,
+    fontWeight: '400',
     textAlign: 'center',
-    color: '#000000',
+    color: COLORS.primary_title,
   },
+  body: {
+    marginTop: 25,
+    paddingHorizontal: 20,
+  },
+  password: {marginTop: 10},
   forgot: {
-    marginRight: 10,
+    marginTop: 10,
     alignSelf: 'flex-end',
   },
   link: {
-    marginTop: 15,
+    marginTop: 25,
     alignSelf: 'center',
   },
+  linkText: {fontSize: 16},
 });

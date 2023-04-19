@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Image, Keyboard, StyleSheet, Text} from 'react-native';
+import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
 import {Button, Checkbox, Container, Input, Link} from '~common';
-import {IMAGES} from '~constants';
+import {COLORS, IMAGES} from '~constants';
 import {setCredentials, setIsSignup, useDispatch} from '~app';
 import {useSignupMutation} from '~services';
 import {ISignup, StackScreenProps} from 'types';
@@ -32,7 +32,15 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
     password2: '',
   });
 
-  const validate = () => {
+  const handleError = (name: string, value: string) => {
+    setErrors(prev => ({...prev, [name]: value}));
+  };
+
+  const handleChange = (name: string, value: string) => {
+    setform(prev => ({...prev, [name]: value}));
+  };
+
+  const handleSignup = () => {
     Keyboard.dismiss();
     let isHaveError = false;
     setErrors({});
@@ -73,14 +81,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
     if (isHaveError) {
       return;
     }
-    handleSignup();
-  };
-
-  const handleError = (name: string, value: string) => {
-    setErrors(prev => ({...prev, [name]: value}));
-  };
-
-  const handleSignup = () => {
     signup(form)
       .unwrap()
       .then(({token, user}) => {
@@ -91,110 +91,116 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
   };
 
   return (
-    <Container isLoading={isLoading} style={styles.container}>
+    <Container isLoading={isLoading}>
       <Image source={IMAGES.auth} style={styles.banner} />
       <Text style={styles.title}>CREATE YOUR ACCOUNT</Text>
       {isError ? <Text>{JSON.stringify(error)}</Text> : null}
-      <Input
-        label="First Name"
-        placeholder="Enter your first name"
-        value={form.first_name}
-        error={errors?.first_name}
-        onChangeText={e => setform(prev => ({...prev, first_name: e}))}
-      />
-      <Input
-        label="Last Name"
-        placeholder="Enter your last name"
-        value={form.last_name}
-        error={errors?.last_name}
-        onChangeText={e => setform(prev => ({...prev, last_name: e}))}
-      />
-      <Input
-        label="Username"
-        placeholder="Enter username"
-        value={form.username}
-        error={errors?.username}
-        autoCapitalize="none"
-        onChangeText={e => setform(prev => ({...prev, username: e}))}
-      />
-      <Input
-        label="Email"
-        placeholder="Enter Email"
-        value={form.email}
-        error={errors?.email}
-        autoCapitalize="none"
-        onChangeText={e => setform(prev => ({...prev, email: e}))}
-      />
-      <Input
-        label="Password"
-        placeholder="Enter Password"
-        value={form.password1}
-        error={errors?.password1}
-        autoCapitalize="none"
-        secureTextEntry
-        onChangeText={e => setform(prev => ({...prev, password1: e}))}
-      />
-      <Input
-        label="Re-type Password"
-        placeholder="Re-type your password"
-        value={form.password2}
-        error={errors?.password2}
-        autoCapitalize="none"
-        secureTextEntry
-        onChangeText={e => setform(prev => ({...prev, password2: e}))}
-      />
-      <Checkbox
-        isChecked={tandc}
-        onPress={() => setTandc(prev => !prev)}
-        label="I agree to the terms and condition and privacy policy of 3 Sigma Plus"
-        containerStyle={styles.checkbox}
-        error={errors.checkedTandS}
-      />
-      <Button
-        title="Sign up"
-        loading={isLoading}
-        onPress={validate}
-        style={styles.link}
-      />
-      <Link
-        text="Already have an account? "
-        link="Login"
-        onPress={() => navigation.navigate('Login')}
-        containerStyle={styles.link}
-      />
+      <View style={styles.body}>
+        <Input
+          label="First Name"
+          placeholder="Enter your first name"
+          onChangeText={e => handleChange('first_name', e)}
+          value={form.first_name}
+          error={errors?.first_name}
+        />
+        <Input
+          label="Last Name"
+          placeholder="Enter your last name"
+          value={form.last_name}
+          error={errors?.last_name}
+          containerStyle={styles.input}
+          onChangeText={e => handleChange('last_name', e)}
+        />
+        <Input
+          label="Username"
+          placeholder="Enter username"
+          value={form.username}
+          error={errors?.username}
+          autoCapitalize="none"
+          containerStyle={styles.input}
+          onChangeText={e => handleChange('username', e)}
+        />
+        <Input
+          label="Email"
+          placeholder="Enter Email"
+          value={form.email}
+          error={errors?.email}
+          autoCapitalize="none"
+          containerStyle={styles.input}
+          onChangeText={e => handleChange('email', e)}
+        />
+        <Input
+          label="Password"
+          placeholder="Enter Password"
+          value={form.password1}
+          error={errors?.password1}
+          autoCapitalize="none"
+          secureTextEntry
+          onChangeText={e => handleChange('password1', e)}
+          containerStyle={styles.input}
+        />
+        <Input
+          label="Re-type Password"
+          placeholder="Re-type your password"
+          value={form.password2}
+          error={errors?.password2}
+          autoCapitalize="none"
+          secureTextEntry
+          onChangeText={e => handleChange('password2', e)}
+          containerStyle={styles.input}
+        />
+        <Checkbox
+          isChecked={tandc}
+          onPress={() => setTandc(prev => !prev)}
+          label="I agree to the terms and condition and privacy policy of 3 Sigma Plus"
+          containerStyle={styles.checkbox}
+          error={errors.checkedTandS}
+        />
+        <Button
+          title="Sign up"
+          loading={isLoading}
+          onPress={handleSignup}
+          style={styles.link}
+        />
+        <Link
+          text="Already have an account? "
+          link="Login"
+          onPress={() => navigation.navigate('Login')}
+          containerStyle={styles.link}
+          textStyle={styles.linkText}
+          linkStyle={styles.linkText}
+        />
+      </View>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 15,
-  },
   banner: {
     height: 200,
     width: '80%',
-    resizeMode: 'contain',
+    resizeMode: 'stretch',
     alignSelf: 'center',
-    marginVertical: 20,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    textAlign: 'center',
-    color: '#000000',
     marginBottom: 20,
   },
-  forgot: {
-    alignSelf: 'flex-end',
-    marginTop: 15,
-    marginRight: 10,
+  title: {
+    fontSize: 24,
+    fontWeight: '400',
+    textAlign: 'center',
+    color: COLORS.primary_title,
+  },
+  body: {
+    paddingTop: 20,
+    paddingHorizontal: 20,
+  },
+  input: {marginTop: 10},
+  checkbox: {
+    marginVertical: 5,
+    paddingHorizontal: 10,
   },
   link: {
     marginTop: 20,
     alignSelf: 'center',
   },
-  checkbox: {
-    marginVertical: 5,
-    paddingHorizontal: 10,
-  },
+  linkText: {fontSize: 16},
 });

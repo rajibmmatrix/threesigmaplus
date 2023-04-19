@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
+import {COLORS} from '~constants';
 
 interface Props {
   title: string;
@@ -29,11 +30,7 @@ const Button: FC<Props> = ({
       style={[styles.container, style]}
       disabled={loading}>
       {loading ? (
-        <ActivityIndicator
-          color={'#ffffff'}
-          size={'small'}
-          style={styles.loader}
-        />
+        <ActivityIndicator color={COLORS.light} size={'small'} />
       ) : (
         <Text style={[styles.title, textStyle]}>{title}</Text>
       )}
@@ -45,19 +42,17 @@ export default memo(Button);
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    width: 150,
+    height: 47,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#EC8A8A',
-    borderRadius: 10,
+    backgroundColor: COLORS.primary_button,
+    borderRadius: 6,
   },
   title: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#ffffff',
-  },
-  loader: {
-    //backgroundColor: '#ffffff',
+    lineHeight: 19,
+    color: COLORS.light,
   },
 });
