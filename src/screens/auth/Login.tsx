@@ -71,7 +71,7 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
           placeholder="Password"
           value={form.password}
           autoCapitalize="none"
-          secureTextEntry
+          isPassword
           onChangeText={e => handleChange('password', e)}
           error={errors?.password}
           containerStyle={styles.password}

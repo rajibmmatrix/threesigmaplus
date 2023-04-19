@@ -135,7 +135,7 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
           value={form.password1}
           error={errors?.password1}
           autoCapitalize="none"
-          secureTextEntry
+          isPassword
           onChangeText={e => handleChange('password1', e)}
           containerStyle={styles.input}
         />
@@ -145,7 +145,7 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
           value={form.password2}
           error={errors?.password2}
           autoCapitalize="none"
-          secureTextEntry
+          isPassword
           onChangeText={e => handleChange('password2', e)}
           containerStyle={styles.input}
         />
