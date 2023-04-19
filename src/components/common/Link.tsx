@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import {COLORS} from '~constants';
+import {COLORS, FONTS} from '~constants';
 
 interface Props {
   text?: string;
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: '400',
+    fontFamily: FONTS.InterRegular,
     color: COLORS.primary_title,
   },
   link: {

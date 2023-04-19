@@ -6,7 +6,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import {COLORS} from '~constants';
+import {COLORS, FONTS} from '~constants';
 
 interface Props {
   isLoading?: boolean;
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '500',
+    fontFamily: FONTS.RobotoMedium,
     color: COLORS.dark,
     marginLeft: 16,
   },

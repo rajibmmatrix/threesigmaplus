@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
 import {Button, Checkbox, Container, Input, Link} from '~common';
-import {COLORS, IMAGES} from '~constants';
+import {COLORS, FONTS, IMAGES} from '~constants';
 import {setCredentials, setIsSignup, useDispatch} from '~app';
 import {useSignupMutation} from '~services';
 import {ISignup, StackScreenProps} from 'types';
@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '400',
+    fontFamily: FONTS.InterRegular,
     textAlign: 'center',
     color: COLORS.primary_title,
   },
@@ -202,5 +203,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center',
   },
-  linkText: {fontSize: 16},
+  linkText: {
+    fontSize: 16,
+    fontFamily: FONTS.RobotoRegular,
+  },
 });

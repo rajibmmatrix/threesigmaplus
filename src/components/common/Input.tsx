@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {COLORS, Icons} from '~constants';
+import {COLORS, FONTS, Icons} from '~constants';
 
 interface Props extends TextInputProps {
   label?: string;
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: '400',
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.secondary_gray,
     paddingHorizontal: 2,
   },
@@ -67,12 +68,14 @@ const styles = StyleSheet.create({
   error: {
     fontSize: 14,
     fontWeight: '400',
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.error,
     marginTop: 5,
   },
   inputText: {
     fontSize: 16,
     fontWeight: '400',
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.dark,
     paddingLeft: 2,
     paddingRight: 5,

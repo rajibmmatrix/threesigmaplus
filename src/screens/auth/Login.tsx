@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
 import {Button, Container, Input, Link} from '~common';
-import {COLORS, IMAGES} from '~constants';
+import {COLORS, FONTS, IMAGES} from '~constants';
 import {setCredentials, useDispatch} from '~app';
 import {useLoginMutation} from '~services';
 import {isPassword} from '~utils';
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: '400',
+    fontFamily: FONTS.InterRegular,
     textAlign: 'center',
     color: COLORS.primary_title,
   },
@@ -126,5 +127,8 @@ const styles = StyleSheet.create({
     marginTop: 25,
     alignSelf: 'center',
   },
-  linkText: {fontSize: 16},
+  linkText: {
+    fontSize: 16,
+    fontFamily: FONTS.RobotoRegular,
+  },
 });
