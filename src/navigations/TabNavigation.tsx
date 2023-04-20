@@ -27,6 +27,7 @@ export default function TabNavigation({}: StackScreenProps<'Tab'>) {
         name="Home"
         component={HomeScreen}
         options={{
+          headerShown: false,
           tabBarIcon: Icons.ActiveHome,
           tabBarButton: props => (
             <BottomTab title="Home" Icon={Icons.ActiveHome} {...props} />

@@ -8,6 +8,7 @@ export const COLORS = {
   primary: '#EC8A8A',
   primary_button: '#1dcece',
   primary_title: '#002648',
+  primary_text: '#1D1D1F',
   primary_gray: '#545454',
   secondary_gray: '#979797',
   error: '#f00',
