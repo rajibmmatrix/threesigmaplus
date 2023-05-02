@@ -1,6 +1,14 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
-import {Button, Checkbox, Container, Input, Link} from '~common';
+import {
+  Button,
+  Checkbox,
+  Container,
+  GoogleButton,
+  Input,
+  Link,
+  Space,
+} from '~components';
 import {COLORS, FONTS, IMAGES} from '~constants';
 import {setCredentials, setIsSignup, useDispatch} from '~app';
 import {useSignupMutation} from '~services';
@@ -143,6 +151,7 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
           onChangeText={e => handleChange('password2', e)}
           containerStyle={styles.input}
         />
+        <Space height={15} />
         <Checkbox
           isChecked={tandc}
           onPress={() => setTandc(prev => !prev)}
@@ -151,11 +160,13 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
           error={errors.checkedTandS}
         />
         <Button
-          title="Sign up"
+          title="Signup"
           loading={isLoading}
           onPress={handleSignup}
           style={styles.link}
         />
+        <Space height={25} />
+        <GoogleButton title="Sign up with Google" onPress={() => {}} />
         <Link
           text="Already have an account? "
           link="Login"
@@ -190,8 +201,9 @@ const styles = StyleSheet.create({
   },
   input: {marginTop: 10},
   checkbox: {
+    paddingLeft: 10,
+    paddingRight: 20,
     marginVertical: 5,
-    paddingHorizontal: 10,
   },
   link: {
     marginTop: 20,

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
-import {Button, Container, Input, Space} from '~common';
-import {COLORS, IMAGES} from '~constants';
+import {Button, Container, Header, Input, Space, _styles} from '~components';
+import {COLORS, FONTS, IMAGES, Icons} from '~constants';
 import {useEditProfileMutation, useGetProfileQuery} from '~services';
 import {IEditProfile, StackScreenProps} from 'types';
 
@@ -65,11 +65,15 @@ export default function EditProfileScreen({}: StackScreenProps<'EditProfile'>) {
 
   return (
     <Container isLoading={isLoading || loading} scrollEnabled>
+      <Header title="Edit Profile" />
       <View style={styles.header}>
-        <Image source={IMAGES.auth} style={styles.pic} />
+        <Image source={IMAGES.user_pic} style={styles.pic} />
+        <View style={[styles.editButton, _styles.allCenter]}>
+          <Icons.Camera height={24} width={24} />
+        </View>
+        <Text style={styles.title}>{user?.email}</Text>
       </View>
       <View style={styles.body}>
-        <Text style={styles.title}>My details</Text>
         <Input
           label="First name"
           onChangeText={e => handleChange('first_name', e)}
@@ -89,7 +93,7 @@ export default function EditProfileScreen({}: StackScreenProps<'EditProfile'>) {
           error={errors?.email}
         />
         <Space height={30} />
-        <Button title="Submit" onPress={handleSubmit} style={styles.button} />
+        <Button title="Submit" onPress={handleSubmit} />
       </View>
     </Container>
   );
@@ -97,29 +101,32 @@ export default function EditProfileScreen({}: StackScreenProps<'EditProfile'>) {
 
 const styles = StyleSheet.create({
   header: {
-    marginTop: 35,
+    marginTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },
   pic: {
-    width: 120,
-    height: 120,
+    width: 150,
+    height: 150,
     borderRadius: 100,
     backgroundColor: COLORS.light,
   },
+  editButton: {
+    width: 60,
+    height: 60,
+    backgroundColor: COLORS.primary_button,
+    borderRadius: 100,
+  },
   body: {
-    marginTop: 35,
-    paddingHorizontal: 10,
+    flex: 1,
+    marginTop: 20,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#8A2727',
-    margin: 10,
-    textDecorationLine: 'underline',
-  },
-  button: {
-    alignSelf: 'flex-end',
-    marginRight: 15,
+    fontFamily: FONTS.RobotoMedium,
+    color: COLORS.light_blue,
+    marginTop: 15,
   },
 });

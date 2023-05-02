@@ -23,8 +23,16 @@ export default function AppNavigation() {
         component={TabNavigation}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-      <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePasswordScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="MyPerformance" component={MyPerformanceScreen} />
       <Stack.Screen name="Preference" component={PreferenceScreen} />
       <Stack.Screen name="Topics" component={TopicsScreen} />

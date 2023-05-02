@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {COLORS} from '~constants';
+import {COLORS, FONTS} from '~constants';
 
 interface Props {
   label?: string;
@@ -46,24 +46,26 @@ export default memo(Checkbox);
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
+    //alignItems: 'center',
   },
   title: {
-    fontSize: 11,
-    fontWeight: '400',
-    color: COLORS.dark,
+    fontSize: 13,
+    fontWeight: '300',
+    fontFamily: FONTS.RobotoRegular,
+    color: COLORS.primary_gray,
     marginLeft: 10,
   },
   checkbox: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     backgroundColor: COLORS.light,
     borderWidth: 1,
-    borderColor: COLORS.dark,
-    borderRadius: 2,
+    borderColor: COLORS.primary_text,
+    borderRadius: 1,
+    marginTop: 3,
   },
   checkedbox: {
-    backgroundColor: COLORS.dark,
+    backgroundColor: COLORS.primary_text,
   },
   error: {
     fontSize: 14,

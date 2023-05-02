@@ -80,7 +80,11 @@ const Input: FC<Props> = ({
         />
         {isPassword && (
           <TouchableOpacity onPress={() => setSecure(p => !p)}>
-            <Icons.Eye width={20} height={20} />
+            {secure ? (
+              <Icons.EyeSlash width={20} height={20} />
+            ) : (
+              <Icons.Eye width={20} height={20} />
+            )}
           </TouchableOpacity>
         )}
       </View>

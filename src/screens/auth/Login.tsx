@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
-import {Button, Container, Input, Link} from '~common';
+import {Button, Container, GoogleButton, Input, Link, Space} from '~components';
 import {COLORS, FONTS, IMAGES} from '~constants';
 import {setCredentials, useDispatch} from '~app';
 import {useLoginMutation} from '~services';
@@ -86,6 +86,8 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
           onPress={handleLogin}
           style={styles.link}
         />
+        <Space height={25} />
+        <GoogleButton title="Log in with Google" onPress={() => {}} />
         <Link
           text="Don't have account? "
           link="Create now"

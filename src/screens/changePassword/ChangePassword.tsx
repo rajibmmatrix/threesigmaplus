@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Keyboard, StyleSheet, View} from 'react-native';
-import {Button, Container, Input} from '~common';
+import {Button, Container, Header, Input} from '~components';
 import {useChangePasswordMutation} from '~services';
 import {isPassword} from '~utils';
 import {IChangePassword, StackScreenProps} from 'types';
@@ -74,11 +74,13 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
 
   return (
     <Container isLoading={isLoading}>
+      <Header title="Change Password" />
       <View style={styles.container}>
         <Input
           label="Old Password"
           onChangeText={e => handleChange('old_password', e)}
           secureTextEntry
+          isPassword
           autoCapitalize="none"
           value={form.old_password}
           error={errors?.old_password}
@@ -87,6 +89,7 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
           label="New Password"
           onChangeText={e => handleChange('new_password', e)}
           secureTextEntry
+          isPassword
           autoCapitalize="none"
           value={form.new_password}
           error={errors?.new_password}
@@ -94,6 +97,7 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
         <Input
           label="Re-type Password"
           onChangeText={e => handleChange('confirm_password', e)}
+          isPassword
           secureTextEntry
           autoCapitalize="none"
           value={form.confirm_password}
@@ -109,11 +113,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   button: {
     marginTop: 30,
-    marginRight: 10,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
   },
 });
