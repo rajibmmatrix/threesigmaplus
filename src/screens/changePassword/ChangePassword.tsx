@@ -77,7 +77,6 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
       <View style={styles.container}>
         <Input
           label="Old Password"
-          placeholder="Enter old password"
           onChangeText={e => handleChange('old_password', e)}
           secureTextEntry
           autoCapitalize="none"
@@ -86,7 +85,6 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
         />
         <Input
           label="New Password"
-          placeholder="Enter new password"
           onChangeText={e => handleChange('new_password', e)}
           secureTextEntry
           autoCapitalize="none"
@@ -95,7 +93,6 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
         />
         <Input
           label="Re-type Password"
-          placeholder="Re-type password"
           onChangeText={e => handleChange('confirm_password', e)}
           secureTextEntry
           autoCapitalize="none"

@@ -72,21 +72,18 @@ export default function EditProfileScreen({}: StackScreenProps<'EditProfile'>) {
         <Text style={styles.title}>My details</Text>
         <Input
           label="First name"
-          placeholder="Enter first name"
           onChangeText={e => handleChange('first_name', e)}
           value={form.first_name}
           error={errors?.first_name}
         />
         <Input
           label="Last name"
-          placeholder="Enter last name"
           onChangeText={e => handleChange('last_name', e)}
           value={form.last_name}
           error={errors?.last_name}
         />
         <Input
           label="Email"
-          placeholder="Enter email id"
           onChangeText={e => handleChange('email', e)}
           value={form.email}
           error={errors?.email}

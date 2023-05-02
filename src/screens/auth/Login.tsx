@@ -61,14 +61,13 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
         {isError ? <Text>{JSON.stringify(error)}</Text> : null}
         <Input
           label="Username"
-          placeholder="Enter username"
           value={form.username}
           autoCapitalize="none"
           onChangeText={e => handleChange('username', e)}
           error={errors?.username}
         />
         <Input
-          placeholder="Password"
+          label="Password"
           value={form.password}
           autoCapitalize="none"
           isPassword

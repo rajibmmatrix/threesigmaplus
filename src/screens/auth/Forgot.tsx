@@ -12,11 +12,7 @@ export default function ForgotScreen({navigation}: StackScreenProps<'Forgot'>) {
       <Image source={IMAGES.auth} style={styles.banner} />
       <Text style={styles.title}>Forgot Password?</Text>
       <View style={styles.body}>
-        <Input
-          label="Email"
-          placeholder="Enter email id"
-          autoCapitalize="none"
-        />
+        <Input label="Email" autoCapitalize="none" />
         <Button title="Submit" onPress={handleForgot} style={styles.link} />
         <Link
           text="Don't have account? "

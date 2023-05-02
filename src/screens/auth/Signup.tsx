@@ -98,14 +98,12 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
       <View style={styles.body}>
         <Input
           label="First Name"
-          placeholder="Enter your first name"
           onChangeText={e => handleChange('first_name', e)}
           value={form.first_name}
           error={errors?.first_name}
         />
         <Input
           label="Last Name"
-          placeholder="Enter your last name"
           value={form.last_name}
           error={errors?.last_name}
           containerStyle={styles.input}
@@ -113,7 +111,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Username"
-          placeholder="Enter username"
           value={form.username}
           error={errors?.username}
           autoCapitalize="none"
@@ -122,7 +119,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Email"
-          placeholder="Enter Email"
           value={form.email}
           error={errors?.email}
           autoCapitalize="none"
@@ -131,7 +127,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Password"
-          placeholder="Enter Password"
           value={form.password1}
           error={errors?.password1}
           autoCapitalize="none"
@@ -141,7 +136,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Re-type Password"
-          placeholder="Re-type your password"
           value={form.password2}
           error={errors?.password2}
           autoCapitalize="none"
