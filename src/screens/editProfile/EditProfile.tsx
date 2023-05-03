@@ -1,6 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
-import {Button, Container, Header, Input, Space, _styles} from '~components';
+import {
+  Image,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  Avatar,
+  Button,
+  Container,
+  Header,
+  Input,
+  Space,
+  _styles,
+} from '~components';
 import {COLORS, FONTS, IMAGES, Icons} from '~constants';
 import {useEditProfileMutation, useGetProfileQuery} from '~services';
 import {IEditProfile, StackScreenProps} from 'types';
@@ -67,9 +82,14 @@ export default function EditProfileScreen({}: StackScreenProps<'EditProfile'>) {
     <Container isLoading={isLoading || loading} scrollEnabled>
       <Header title="Edit Profile" />
       <View style={styles.header}>
-        <Image source={IMAGES.user_pic} style={styles.pic} />
-        <View style={[styles.editButton, _styles.allCenter]}>
-          <Icons.Camera height={24} width={24} />
+        <View style={styles.avatarContainer}>
+          <Avatar url="https://picsum.photos/200" size={150} />
+          <TouchableOpacity
+            onPress={() => {}}
+            activeOpacity={0.6}
+            style={[styles.editButton, _styles.allCenter]}>
+            <Icons.Camera height={24} width={24} />
+          </TouchableOpacity>
         </View>
         <Text style={styles.title}>{user?.email}</Text>
       </View>
@@ -105,15 +125,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  pic: {
+  avatarContainer: {
     width: 150,
     height: 150,
-    borderRadius: 100,
-    backgroundColor: COLORS.light,
   },
   editButton: {
+    right: -10,
+    bottom: 0,
     width: 60,
     height: 60,
+    position: 'absolute',
     backgroundColor: COLORS.primary_button,
     borderRadius: 100,
   },
