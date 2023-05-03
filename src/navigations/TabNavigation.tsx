@@ -52,9 +52,10 @@ export default function TabNavigation({}: StackScreenProps<'Tab'>) {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerShown: false,
           tabBarIcon: Icons.User,
           tabBarButton: props => (
-            <BottomTab title="Profile" Icon={Icons.ActiveHome} {...props} />
+            <BottomTab title="Profile" Icon={Icons.ActiveUser} {...props} />
           ),
         }}
       />

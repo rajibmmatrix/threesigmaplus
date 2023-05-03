@@ -19,6 +19,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  flexRow: {
+    flexDirection: 'row',
+  },
+  flexRowCenter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rowCenterSpace: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 });
 
 export default styles;

@@ -1,14 +1,16 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {FC, memo} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Avatar from './Avatar';
 import {COLORS, FONTS, Icons} from '~constants';
 
 interface Props {
   title: string;
   back?: boolean;
+  showAvatar?: boolean;
 }
 
-const Header: FC<Props> = ({title, back = true}) => {
+const Header: FC<Props> = ({title, back = true, showAvatar = false}) => {
   const navigation = useNavigation();
 
   return (
@@ -21,7 +23,7 @@ const Header: FC<Props> = ({title, back = true}) => {
         )}
       </View>
       <Text style={styles.title}>{title}</Text>
-      <View style={styles.box}></View>
+      <View style={styles.box}>{showAvatar && <Avatar size={50} />}</View>
     </View>
   );
 };
