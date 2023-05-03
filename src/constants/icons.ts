@@ -8,6 +8,7 @@ export {default as GoogleIcon} from '../assets/icons/google_icon.svg';
 
 //For bottom Tab
 export {default as ActiveHome} from '../assets/icons/home_active.svg';
+export {default as ActiveSubject} from '../assets/icons/subject_active.svg';
 export {default as Bell} from '../assets/icons/bell.svg';
 export {default as User} from '../assets/icons/user.svg';
 export {default as Subject} from '../assets/icons/subject.svg';

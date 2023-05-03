@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {Button, Container, RadioButton} from '~common';
+import {Button, Container, Header, PreferenceItem} from '~components';
+import {COLORS, FONTS} from '~constants';
 import {
   useEditProfileMutation,
   useGetCoursesQuery,
   useGetProfileQuery,
 } from '~services';
+import {log} from '~utils';
 import {StackScreenProps} from 'types';
 
 export default function PreferenceScreen({
@@ -21,11 +23,12 @@ export default function PreferenceScreen({
     update({preference_course_id: selectedItem})
       .unwrap()
       .then(() => navigation.goBack())
-      .catch(err => console.log(err));
+      .catch(err => log(err));
   };
 
   return (
     <Container isLoading={isLoading || loading} scrollEnabled={false}>
+      <Header title="Select Preference" />
       {isError ? (
         <View style={styles.container}>
           <Text style={styles.title}>{error.message}</Text>
@@ -33,9 +36,10 @@ export default function PreferenceScreen({
       ) : (
         <FlatList
           data={data}
+          bounces={false}
           keyExtractor={item => item?.id}
           renderItem={({item}) => (
-            <RadioButton
+            <PreferenceItem
               title={item?.title}
               isSelected={
                 selectedItem
@@ -65,9 +69,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '500',
+    fontFamily: FONTS.RobotoMedium,
+    color: COLORS.primary_text,
     textAlign: 'center',
-    color: '#000000',
   },
   content: {
     flex: 1,
@@ -76,6 +81,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
+    width: '100%',
+    marginBottom: 40,
     alignSelf: 'flex-end',
     justifyContent: 'flex-end',
   },

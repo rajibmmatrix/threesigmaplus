@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -61,9 +62,10 @@ export default function TabNavigation({}: StackScreenProps<'Tab'>) {
         name="Subjects"
         component={SubjectsScreen}
         options={{
+          headerShown: false,
           tabBarIcon: Icons.Subject,
           tabBarButton: props => (
-            <BottomTab title="Subjects" Icon={Icons.ActiveHome} {...props} />
+            <BottomTab title="Subjects" Icon={Icons.ActiveSubject} {...props} />
           ),
         }}
       />

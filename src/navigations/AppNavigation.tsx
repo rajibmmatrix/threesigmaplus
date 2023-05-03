@@ -34,7 +34,11 @@ export default function AppNavigation() {
         options={{headerShown: false}}
       />
       <Stack.Screen name="MyPerformance" component={MyPerformanceScreen} />
-      <Stack.Screen name="Preference" component={PreferenceScreen} />
+      <Stack.Screen
+        name="Preference"
+        component={PreferenceScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="Topics" component={TopicsScreen} />
       <Stack.Group screenOptions={{presentation: 'fullScreenModal'}}>
         <Stack.Screen
