@@ -2,14 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Container, Header} from '~components';
 import {COLORS, FONTS} from '~constants';
-import {TabScreenProps} from 'types';
+import {StackScreenProps} from 'types';
 
-export default function NotificationScreen({}: TabScreenProps<'Notification'>) {
+export default function ContactUsScreen({}: StackScreenProps<'Contact'>) {
   return (
     <Container>
-      <Header title="Notification" back={false} />
+      <Header title="Contact us" />
       <View style={styles.container}>
-        <Text style={styles.title}>Notification Screen</Text>
+        <Text style={styles.title}>Contact us Screen</Text>
       </View>
     </Container>
   );

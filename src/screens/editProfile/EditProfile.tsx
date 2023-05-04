@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Image,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Keyboard, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
   Avatar,
   Button,
@@ -16,7 +9,7 @@ import {
   Space,
   _styles,
 } from '~components';
-import {COLORS, FONTS, IMAGES, Icons} from '~constants';
+import {COLORS, FONTS, Icons} from '~constants';
 import {useEditProfileMutation, useGetProfileQuery} from '~services';
 import {IEditProfile, StackScreenProps} from 'types';
 

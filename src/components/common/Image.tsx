@@ -1,4 +1,4 @@
-import React, {FC, memo, useMemo, useState} from 'react';
+import React, {FC, memo, useState} from 'react';
 import {
   StyleSheet,
   Image as RNImage,

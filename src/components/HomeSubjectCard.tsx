@@ -24,7 +24,7 @@ const HomeSubjectCard: FC<Props> = ({title, descripton}) => {
   return (
     <View style={[styles.container, _styles.shadow]}>
       <Text style={styles.title}>{title}</Text>
-      <View style={[_styles.selfCenter, {alignItems: 'center'}]}>
+      <View style={[_styles.selfCenter, _styles.alignCenter]}>
         <BarChart
           height={120}
           width={swidth - 100}

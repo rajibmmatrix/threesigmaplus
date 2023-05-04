@@ -2,10 +2,15 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabNavigation from './TabNavigation';
 import {
+  AboutUsScreen,
   ChangePasswordScreen,
+  ContactUsScreen,
   EditProfileScreen,
+  FAQScreen,
   MyPerformanceScreen,
   PreferenceScreen,
+  PrivacyPolicyScreen,
+  TermsAndConditionsScreen,
   TopicsScreen,
 } from '~screens';
 import {ZoomScreen} from '~shared';
@@ -40,12 +45,18 @@ export default function AppNavigation() {
         options={{headerShown: false}}
       />
       <Stack.Screen name="Topics" component={TopicsScreen} />
-      <Stack.Group screenOptions={{presentation: 'fullScreenModal'}}>
-        <Stack.Screen
-          name="Zoom"
-          component={ZoomScreen}
-          options={{headerShown: false}}
-        />
+      {/* More Screens */}
+      <Stack.Group screenOptions={{headerShown: false}}>
+        <Stack.Screen name="FAQ" component={FAQScreen} />
+        <Stack.Screen name="About" component={AboutUsScreen} />
+        <Stack.Screen name="Contact" component={ContactUsScreen} />
+        <Stack.Screen name="Policy" component={PrivacyPolicyScreen} />
+        <Stack.Screen name="Terms" component={TermsAndConditionsScreen} />
+      </Stack.Group>
+      {/* More Screens */}
+      <Stack.Group
+        screenOptions={{presentation: 'fullScreenModal', headerShown: false}}>
+        <Stack.Screen name="Zoom" component={ZoomScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

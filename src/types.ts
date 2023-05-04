@@ -28,6 +28,11 @@ export type AppParamList = {
   Preference: undefined;
   Topics: {subject_id: string} | undefined;
   Zoom: {image: string} | undefined;
+  About: undefined;
+  Policy: undefined;
+  Terms: undefined;
+  Contact: undefined;
+  FAQ: undefined;
 };
 
 //For Tab Navigations

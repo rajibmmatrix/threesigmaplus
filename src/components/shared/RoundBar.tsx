@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import React, {FC, memo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {PieChart} from 'react-native-gifted-charts';
@@ -26,6 +25,7 @@ const RoundBar: FC<Props> = ({title}) => {
           radius={32}
           innerRadius={25}
           data={pieData}
+          // eslint-disable-next-line react/no-unstable-nested-components
           centerLabelComponent={() => <CenterText number="80" />}
         />
       </View>
