@@ -11,7 +11,7 @@ import {
 import {useGetTopicsQuery} from '~services';
 import {TabScreenProps} from 'types';
 
-export default function HomeScreen({}: TabScreenProps<'Home'>) {
+export default function HomeScreen({navigation}: TabScreenProps<'Home'>) {
   const {isLoading, data} = useGetTopicsQuery('7');
 
   return (
@@ -22,6 +22,7 @@ export default function HomeScreen({}: TabScreenProps<'Home'>) {
           title="Recommended Topics"
           description="See all"
           containerStyle={styles.header}
+          onPress={() => navigation.navigate('Subjects')}
         />
         {data?.length && (
           <FlatList

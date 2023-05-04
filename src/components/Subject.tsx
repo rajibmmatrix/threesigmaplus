@@ -1,23 +1,17 @@
 import React, {FC, memo} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {COLORS, FONTS, IMAGES} from '~constants';
-import {swidth} from '~utils';
+import {randomColor, swidth} from '~utils';
 
 interface Props {
   title: string;
-  index?: number;
   onPress?: () => void;
 }
 
-const colors = ['#E3F0E4', '#FFDEDE', '#FFF8E2', '#F4F9FF'];
-
-const Subject: FC<Props> = ({title, index = 0, onPress}) => {
-  const key: number =
-    index % 4 === 0 ? 3 : index % 3 === 0 ? 2 : index % 2 === 0 ? 1 : 0;
-
+const Subject: FC<Props> = ({title, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} disabled={!onPress}>
-      <View style={[styles.container, {backgroundColor: colors[key]}]}>
+      <View style={[styles.container, {backgroundColor: randomColor()}]}>
         <Image source={IMAGES.home_item} style={styles.image} />
         <Text numberOfLines={1} style={styles.title}>
           {title}

@@ -25,9 +25,8 @@ export default function SubjectsScreen({
             numColumns={2}
             bounces={false}
             keyExtractor={item => item?.id}
-            renderItem={({item, index}) => (
+            renderItem={({item}) => (
               <Subject
-                index={index}
                 title={item?.title}
                 onPress={() => {
                   navigation.navigate('Topics', {subject_id: item?.id});
