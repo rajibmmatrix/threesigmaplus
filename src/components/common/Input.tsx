@@ -38,7 +38,7 @@ const Input: FC<Props> = ({
       duration: 300,
       useNativeDriver: false,
     }).start();
-  }, [isFocused, value]);
+  }, [isFocused, position, value]);
 
   const top = position.interpolate({
     inputRange: [0, 1],
