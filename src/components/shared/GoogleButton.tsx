@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: COLORS.secondary_text,
+    borderColor: COLORS.primary_gray,
     borderWidth: 1,
     borderRadius: 6,
   },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: FONTS.RobotoRegular,
     lineHeight: 19,
-    color: COLORS.secondary_text,
+    color: COLORS.primary_gray,
     marginLeft: 10,
   },
 });

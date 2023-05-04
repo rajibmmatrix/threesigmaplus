@@ -8,11 +8,11 @@ import {
   HomeTopic,
   Space,
 } from '~components';
-import {useGetSubjectQuery} from '~services';
+import {useGetTopicsQuery} from '~services';
 import {TabScreenProps} from 'types';
 
 export default function HomeScreen({}: TabScreenProps<'Home'>) {
-  const {isLoading, data} = useGetSubjectQuery();
+  const {isLoading, data} = useGetTopicsQuery('7');
 
   return (
     <Container scrollEnabled isLoading={isLoading}>
@@ -29,9 +29,7 @@ export default function HomeScreen({}: TabScreenProps<'Home'>) {
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listContainer}
-            renderItem={({item, index}) => (
-              <HomeTopic index={index + 1} title={item?.title} />
-            )}
+            renderItem={({item}) => <HomeTopic title={item?.title} />}
             keyExtractor={item => item?.id}
           />
         )}

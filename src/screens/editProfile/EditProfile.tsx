@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: 'absolute',
-    backgroundColor: COLORS.primary_button,
+    backgroundColor: COLORS.primary,
     borderRadius: 100,
   },
   body: {

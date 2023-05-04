@@ -21,7 +21,7 @@ const Loader: FC<Props> = ({isLoading = false}) => {
   return (
     <View style={[styles.container, {width, height}]}>
       <View style={styles.loader}>
-        <ActivityIndicator size={'large'} color={COLORS.primary_button} />
+        <ActivityIndicator size={'large'} color={COLORS.primary} />
         <Text style={styles.title}>Loading...</Text>
       </View>
     </View>

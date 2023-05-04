@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    backgroundColor: COLORS.primary_button,
+    backgroundColor: COLORS.primary,
   },
   box: {
     width: 50,

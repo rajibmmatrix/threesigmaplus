@@ -1,22 +1,25 @@
 import React, {FC, memo} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
+import {Avatar, RoundBar, _styles} from '~shared';
 import {COLORS, FONTS, IMAGES} from '~constants';
-import {RoundBar, _styles} from '~shared';
+import {useGetProfileQuery} from '~services';
 import {swidth} from '~utils';
 
 const HomeHeader: FC = () => {
+  const {data} = useGetProfileQuery();
+
   return (
     <View style={styles.container}>
       <Image source={IMAGES.header} style={styles.image} />
       <View style={styles.header}>
-        <Text style={styles.title}>Hello,</Text>
-        <Text style={styles.desc}>Good morning</Text>
+        <View style={_styles.rowCenterSpace}>
+          <Text style={styles.title}>Hello! {data?.first_name}</Text>
+          <Avatar size={45} />
+        </View>
         <View style={[styles.card, _styles.shadow]}>
           <Text style={[styles.title, styles.cardText]}>Your Performance</Text>
-          <Text style={[styles.desc, styles.cardText]}>
-            Total number of session given 8
-          </Text>
-          <View style={styles.bottom}>
+          <Text style={styles.desc}>Total number of session given 8</Text>
+          <View style={[styles.bottom, _styles.rowCenterSpace]}>
             <RoundBar title="Physics" />
             <RoundBar title="Chemistery" />
             <RoundBar title="Biology" />
@@ -49,15 +52,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '500',
     fontFamily: FONTS.RobotoMedium,
-    color: COLORS.light,
-  },
-  desc: {
-    fontSize: 16,
-    fontWeight: '400',
-    fontFamily: FONTS.RobotoRegular,
     color: COLORS.light,
   },
   card: {
@@ -69,13 +66,18 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   cardText: {
+    fontSize: 18,
+    marginBottom: 3,
+    color: COLORS.primary_text,
+  },
+  desc: {
+    fontSize: 16,
+    fontWeight: '400',
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.primary_text,
   },
   bottom: {
     flex: 1,
     marginTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
 });

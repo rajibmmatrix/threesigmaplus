@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
   },
   selected: {
     borderWidth: 1,
-    borderColor: COLORS.primary_button,
+    borderColor: COLORS.primary,
   },
 });

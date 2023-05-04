@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
     color: COLORS.primary_title,
   },
   link: {
-    color: COLORS.primary_button,
+    color: COLORS.primary,
   },
 });

@@ -51,6 +51,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     fontFamily: FONTS.RobotoRegular,
-    color: COLORS.primary_button,
+    color: COLORS.primary,
   },
 });
