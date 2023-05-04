@@ -1,16 +1,22 @@
-import React, {FC, memo} from 'react';
+import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {BottomTabBarButtonProps} from '@react-navigation/bottom-tabs';
-import {SvgProps} from 'react-native-svg';
-import {COLORS, FONTS} from '~constants';
+import {COLORS, FONTS, Icons} from '~constants';
 
-interface Props extends BottomTabBarButtonProps {
-  title: string;
-  Icon: FC<SvgProps>;
-}
+const icons = {
+  Home: [Icons.Home, Icons.ActiveHome],
+  Notify: [Icons.Bell, Icons.ActiveBell],
+  Profile: [Icons.User, Icons.ActiveUser],
+  Subjects: [Icons.Subject, Icons.ActiveSubject],
+  More: [Icons.More, Icons.ActiveMore],
+};
 
-const BottomTab: FC<Props> = ({title, Icon, ...props}) => {
+type IKey = 'Home' | 'Notify' | 'Profile' | 'Subjects' | 'More';
+
+function BottomTab(props: BottomTabBarButtonProps) {
   const isSelected = props.accessibilityState?.selected;
+  const label: IKey = props.accessibilityLabel?.split(',')?.[0]! as IKey;
+  const Icon = isSelected ? icons[label]?.[1] : icons[label]?.[0];
 
   return (
     <Pressable
@@ -18,17 +24,17 @@ const BottomTab: FC<Props> = ({title, Icon, ...props}) => {
       style={[styles.container, isSelected && styles.flex]}>
       {isSelected ? (
         <View style={styles.body}>
-          <Icon width={18} height={18} />
-          <Text style={styles.title}>{title}</Text>
+          <Icon width={20} height={20} />
+          <Text style={styles.title}>{label}</Text>
         </View>
       ) : (
-        props.children
+        <Icon width={24} height={24} />
       )}
     </Pressable>
   );
-};
+}
 
-export default memo(BottomTab);
+export default BottomTab;
 
 const styles = StyleSheet.create({
   container: {

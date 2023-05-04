@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -10,7 +9,7 @@ import {
   SubjectsScreen,
 } from '~screens';
 import {BottomTab} from '~components';
-import {COLORS, Icons} from '~constants';
+import {COLORS} from '~constants';
 import {StackScreenProps, TabParamList} from 'types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -20,66 +19,22 @@ export default function TabNavigation({}: StackScreenProps<'Tab'>) {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
+        headerShown: false,
         tabBarShowLabel: false,
+        tabBarButton: BottomTab,
         tabBarStyle: styles.tabContainer,
       }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: Icons.ActiveHome,
-          tabBarButton: props => (
-            <BottomTab title="Home" Icon={Icons.ActiveHome} {...props} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen
         name="Notification"
         component={NotificationScreen}
         options={{
-          tabBarIcon: Icons.Bell,
-          tabBarButton: props => (
-            <BottomTab
-              title="Notification"
-              Icon={Icons.ActiveHome}
-              {...props}
-            />
-          ),
+          tabBarLabel: 'Notify',
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: Icons.User,
-          tabBarButton: props => (
-            <BottomTab title="Profile" Icon={Icons.ActiveUser} {...props} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Subjects"
-        component={SubjectsScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: Icons.Subject,
-          tabBarButton: props => (
-            <BottomTab title="Subjects" Icon={Icons.ActiveSubject} {...props} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="More"
-        component={MoreScreen}
-        options={{
-          tabBarIcon: Icons.More,
-          tabBarButton: props => (
-            <BottomTab title="More" Icon={Icons.ActiveHome} {...props} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Subjects" component={SubjectsScreen} />
+      <Tab.Screen name="More" component={MoreScreen} />
     </Tab.Navigator>
   );
 }

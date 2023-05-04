@@ -13,8 +13,12 @@ export {default as Performance} from '../assets/icons/performance.svg';
 
 //For bottom Tab
 export {default as ActiveHome} from '../assets/icons/home_active.svg';
-export {default as ActiveSubject} from '../assets/icons/subject_active.svg';
+export {default as ActiveBell} from '../assets/icons/bell_active.svg';
 export {default as ActiveUser} from '../assets/icons/user_active.svg';
+export {default as ActiveSubject} from '../assets/icons/subject_active.svg';
+export {default as ActiveMore} from '../assets/icons/category_active.svg';
+
+export {default as Home} from '../assets/icons/home.svg';
 export {default as Bell} from '../assets/icons/bell.svg';
 export {default as User} from '../assets/icons/user.svg';
 export {default as Subject} from '../assets/icons/subject.svg';
