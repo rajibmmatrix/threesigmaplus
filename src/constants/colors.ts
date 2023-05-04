@@ -3,6 +3,7 @@ export const COLORS = {
   light: '#ffffff',
   dark: '#000000',
   background: '#ffffff',
+  bar: '#14C9C9',
   tabbar: 'rgba(77, 138, 240, 0.28)',
   modal: 'rgba(0,0,0,0.5)',
   primary_title: '#002648',

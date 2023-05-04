@@ -23,7 +23,7 @@ const Header: FC<Props> = ({title, back = true, showAvatar = false}) => {
         )}
       </View>
       <Text style={styles.title}>{title}</Text>
-      <View style={styles.box}>{showAvatar && <Avatar size={50} />}</View>
+      <View style={styles.box}>{showAvatar && <Avatar size={45} />}</View>
     </View>
   );
 };

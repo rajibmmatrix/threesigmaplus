@@ -20,10 +20,14 @@ const HomeHeader: FC = () => {
           <Text style={[styles.title, styles.cardText]}>Your Performance</Text>
           <Text style={styles.desc}>Total number of session given 8</Text>
           <View style={[styles.bottom, _styles.rowCenterSpace]}>
-            <RoundBar title="Physics" />
-            <RoundBar title="Chemistery" />
-            <RoundBar title="Biology" />
-            <RoundBar title="Math" />
+            <RoundBar title="Physics" number={80} color="#165DFF" />
+            <RoundBar title="Chemistery" number={'85'} />
+            <RoundBar
+              title="Biology"
+              number={85}
+              color="rgba(7, 181, 14, 0.3)"
+            />
+            <RoundBar title="Math" number={85} />
           </View>
         </View>
       </View>

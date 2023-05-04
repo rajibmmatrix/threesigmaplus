@@ -22,7 +22,7 @@ const Image: FC<Props> = ({source, uri, style, resizeMode = 'contain'}) => {
     <>
       {isLoading && <View style={[styles.cover, style]} />}
       <RNImage
-        source={uri ? {uri} : source ? source : IMAGES.user_pic}
+        source={uri ? {uri} : source ? source : IMAGES.logo}
         resizeMode={resizeMode}
         onLoadEnd={() => setIsLoading(false)}
         style={[styles.image, style, isLoading && styles.hide]}

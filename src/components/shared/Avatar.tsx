@@ -18,7 +18,7 @@ const Avatar: FC<Props> = ({size, url, style, resizeMode = 'cover'}) => {
     <View style={[styles.container, style, sizes]}>
       <Image
         uri={url}
-        source={IMAGES.user_pic}
+        source={IMAGES.avatar}
         resizeMode={resizeMode}
         style={styles.image}
       />
