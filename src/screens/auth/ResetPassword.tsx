@@ -1,26 +1,19 @@
 import React, {useState} from 'react';
 import {Keyboard, StyleSheet, View} from 'react-native';
 import {Button, Container, Header, Input} from '~components';
-import {useChangePasswordMutation} from '~services';
 import {isPassword} from '~utils';
-import {IChangePassword, StackScreenProps} from 'types';
+import {StackScreenProps} from 'types';
 
-interface IErrors {
-  old_password?: string;
+interface IForm {
   new_password?: string;
   confirm_password?: string;
 }
 
-type IForm = IChangePassword & {
-  confirm_password: string;
-};
-
-export default function ChangePasswordScreen({}: StackScreenProps<'ChangePassword'>) {
-  const [update, {isLoading}] = useChangePasswordMutation();
-
-  const [errors, setErrors] = useState<IErrors | null>(null);
+export default function ResetPasswordScreen({
+  navigation,
+}: StackScreenProps<'Reset'>) {
+  const [errors, setErrors] = useState<IForm | null>(null);
   const [form, setForm] = useState<IForm>({
-    old_password: '',
     new_password: '',
     confirm_password: '',
   });
@@ -29,16 +22,6 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
     Keyboard.dismiss();
     let isHaveError = false;
     setErrors({});
-    if (!form.old_password) {
-      isHaveError = true;
-      handleError('old_password', 'Please enter old password');
-    } else if (!isPassword(form.old_password)) {
-      isHaveError = true;
-      handleError(
-        'old_password',
-        'Password must be more then 8 character long',
-      );
-    }
     if (!form.new_password) {
       isHaveError = true;
       handleError('new_password', 'Please enter new password');
@@ -51,15 +34,15 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
     }
     if (!form.confirm_password) {
       isHaveError = true;
-      handleError('confirm_password', 'Please re-type password');
+      handleError('confirm_password', 'Please confirm new password');
     } else if (form.new_password !== form.confirm_password) {
       isHaveError = true;
-      handleError('confirm_password', 'Re-type Password not match');
+      handleError('confirm_password', 'Confirm new password not match');
     }
     if (isHaveError) {
       return;
     }
-    update({old_password: form.old_password, new_password: form.new_password});
+    navigation.navigate('Login');
   };
 
   const handleChange = (key: string, value: string) => {
@@ -71,34 +54,26 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
   };
 
   return (
-    <Container isLoading={isLoading}>
-      <Header title="Change Password" />
+    <Container isLoading={false}>
+      <Header title="Reset Password" />
       <View style={styles.container}>
         <Input
-          label="Old Password"
-          isPassword
-          autoCapitalize="none"
-          onChangeText={e => handleChange('old_password', e)}
-          value={form.old_password}
-          error={errors?.old_password}
-        />
-        <Input
-          label="New Password"
-          isPassword
-          autoCapitalize="none"
+          label="Enter New Password"
           onChangeText={e => handleChange('new_password', e)}
+          isPassword
+          autoCapitalize="none"
           value={form.new_password}
           error={errors?.new_password}
         />
         <Input
-          label="Re-type Password"
+          label="Confirm New Password"
+          onChangeText={e => handleChange('confirm_password', e)}
           isPassword
           autoCapitalize="none"
-          onChangeText={e => handleChange('confirm_password', e)}
           value={form.confirm_password}
           error={errors?.confirm_password}
         />
-        <Button title="Submit" onPress={handleSubmit} style={styles.button} />
+        <Button title="SAVE" onPress={handleSubmit} style={styles.button} />
       </View>
     </Container>
   );
@@ -107,7 +82,7 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 30,
     paddingHorizontal: 20,
   },
   button: {

@@ -17,6 +17,8 @@ export type StackParamList = AppParamList & {
   Login: undefined;
   Signup: undefined;
   Forgot: undefined;
+  Verification: {email: string} | undefined;
+  Reset: {email: string} | undefined;
 };
 
 //For App Navigations
