@@ -18,7 +18,7 @@ export default function ContactUsScreen({}: StackScreenProps<'Contact'>) {
             <Text style={styles.title}>Message</Text>
             <Icons.ArrowDown width={24} height={24} />
           </View>
-          <TextInput multiline numberOfLines={7} style={styles.input} />
+          <TextInput multiline numberOfLines={6} style={styles.input} />
         </View>
         <Button title="Submit" onPress={() => {}} />
       </View>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary_text,
   },
   input: {
-    height: 150,
+    height: 125,
     fontSize: 16,
     fontWeight: '500',
     marginVertical: 5,
