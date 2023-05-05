@@ -10,6 +10,7 @@ export {default as Lampon} from '../assets/icons/lamp-on.svg';
 export {default as Logout} from '../assets/icons/login.svg';
 export {default as Profile} from '../assets/icons/profile.svg';
 export {default as Performance} from '../assets/icons/performance.svg';
+export {default as ArrowDown} from '../assets/icons/arrow-down.svg';
 
 //For bottom Tab
 export {default as ActiveHome} from '../assets/icons/home_active.svg';
