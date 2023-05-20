@@ -1,60 +1,49 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {Button, Container, Input, Link} from '~common';
-import {COLORS, FONTS, IMAGES} from '~constants';
+import React, {useState} from 'react';
+import {Keyboard, StyleSheet, View} from 'react-native';
+import {Button, Container, Header, Input} from '~components';
+import {isValidEmail} from '~utils';
 import {StackScreenProps} from 'types';
 
 export default function ForgotScreen({navigation}: StackScreenProps<'Forgot'>) {
-  const handleForgot = () => {};
+  const [email, setEmail] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  const handleSubmit = () => {
+    Keyboard.dismiss();
+    setError('');
+    if (!email) {
+      return setError('Please enter your email');
+    } else if (!isValidEmail(email)) {
+      return setError('Please enter a valid email');
+    }
+    navigation.navigate('Verification', {email});
+  };
 
   return (
-    <Container scrollEnabled>
-      <Image source={IMAGES.auth} style={styles.banner} />
-      <Text style={styles.title}>Forgot Password?</Text>
-      <View style={styles.body}>
+    <Container isLoading={false}>
+      <Header title="Forgot Password" />
+      <View style={styles.container}>
         <Input
           label="Email"
-          placeholder="Enter email id"
+          onChangeText={setEmail}
           autoCapitalize="none"
+          value={email}
+          error={error}
         />
-        <Button title="Submit" onPress={handleForgot} style={styles.link} />
-        <Link
-          text="Don't have account? "
-          link="Create now"
-          onPress={() => navigation.navigate('Signup')}
-          containerStyle={styles.link}
-          textStyle={styles.linkText}
-          linkStyle={styles.linkText}
-        />
+        <Button title="Submit" onPress={handleSubmit} style={styles.button} />
       </View>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  banner: {
-    height: 250,
-    width: '90%',
-    resizeMode: 'stretch',
-    alignSelf: 'center',
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: '400',
-    fontFamily: FONTS.InterRegular,
-    textAlign: 'center',
-    color: COLORS.primary_title,
-  },
-  body: {
-    marginTop: 25,
+  container: {
+    flex: 1,
+    marginTop: 80,
     paddingHorizontal: 20,
   },
-  link: {
-    marginTop: 25,
+  button: {
+    marginTop: 30,
     alignSelf: 'center',
-  },
-  linkText: {
-    fontSize: 16,
-    fontFamily: FONTS.RobotoRegular,
   },
 });

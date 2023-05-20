@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {
   Container,
@@ -8,11 +8,19 @@ import {
   HomeTopic,
   Space,
 } from '~components';
-import {useGetSubjectQuery} from '~services';
+import {useAuth} from '~app';
+import {useGetTopicsQuery} from '~services';
 import {TabScreenProps} from 'types';
 
-export default function HomeScreen({}: TabScreenProps<'Home'>) {
-  const {isLoading, data} = useGetSubjectQuery();
+export default function HomeScreen({navigation}: TabScreenProps<'Home'>) {
+  const {isFromSignup} = useAuth();
+  const {isLoading, data} = useGetTopicsQuery('7');
+
+  useEffect(() => {
+    if (isFromSignup) {
+      navigation.navigate('Preference');
+    }
+  }, [isFromSignup, navigation]);
 
   return (
     <Container scrollEnabled isLoading={isLoading}>
@@ -22,19 +30,18 @@ export default function HomeScreen({}: TabScreenProps<'Home'>) {
           title="Recommended Topics"
           description="See all"
           containerStyle={styles.header}
+          onPress={() => navigation.navigate('Subjects')}
         />
-        {data?.length && (
+        {data?.length ? (
           <FlatList
             data={data}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listContainer}
-            renderItem={({item, index}) => (
-              <HomeTopic index={index + 1} title={item?.title} />
-            )}
+            renderItem={({item}) => <HomeTopic title={item?.title} />}
             keyExtractor={item => item?.id}
           />
-        )}
+        ) : null}
         <HomeTitle
           title="Subjectwise Performance"
           containerStyle={styles.header}
@@ -67,7 +74,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingTop: 10,
-    paddingLeft: 10,
+    paddingRight: 10,
     paddingBottom: 15,
   },
 });

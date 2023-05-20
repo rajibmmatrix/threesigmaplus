@@ -21,7 +21,7 @@ const Loader: FC<Props> = ({isLoading = false}) => {
   return (
     <View style={[styles.container, {width, height}]}>
       <View style={styles.loader}>
-        <ActivityIndicator size={'large'} color={COLORS.primary_button} />
+        <ActivityIndicator size={'large'} color={COLORS.primary} />
         <Text style={styles.title}>Loading...</Text>
       </View>
     </View>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   loader: {
     height: 70,
     borderRadius: 5,
-    marginHorizontal: 50,
+    marginHorizontal: 20,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '500',
     fontFamily: FONTS.RobotoMedium,
     color: COLORS.dark,
     marginLeft: 16,

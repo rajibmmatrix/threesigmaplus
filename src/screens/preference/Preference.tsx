@@ -1,18 +1,22 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {Button, Container, RadioButton} from '~common';
+import {FlatList, StyleSheet} from 'react-native';
+import {Button, Container, Error, Header, PreferenceItem} from '~components';
+import {setIsSignup, useAuth, useDispatch} from '~app';
 import {
   useEditProfileMutation,
   useGetCoursesQuery,
   useGetProfileQuery,
 } from '~services';
+import {log} from '~utils';
 import {StackScreenProps} from 'types';
 
 export default function PreferenceScreen({
   navigation,
 }: StackScreenProps<'Preference'>) {
+  const dispatch = useDispatch();
+  const {isFromSignup} = useAuth();
   const {data: user} = useGetProfileQuery();
-  const {isLoading, data, isError, error} = useGetCoursesQuery();
+  const {isLoading, data, isError} = useGetCoursesQuery();
   const [update, {isLoading: loading}] = useEditProfileMutation();
 
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -20,22 +24,25 @@ export default function PreferenceScreen({
   const handleSelectPreference = () => {
     update({preference_course_id: selectedItem})
       .unwrap()
-      .then(() => navigation.goBack())
-      .catch(err => console.log(err));
+      .then(() => {
+        dispatch(setIsSignup(false));
+        navigation.goBack();
+      })
+      .catch(err => log(err));
   };
 
   return (
     <Container isLoading={isLoading || loading} scrollEnabled={false}>
+      <Header title="Select Preference" back={!isFromSignup} />
       {isError ? (
-        <View style={styles.container}>
-          <Text style={styles.title}>{error.message}</Text>
-        </View>
+        <Error msg="No preference found" />
       ) : (
         <FlatList
           data={data}
+          bounces={false}
           keyExtractor={item => item?.id}
           renderItem={({item}) => (
-            <RadioButton
+            <PreferenceItem
               title={item?.title}
               isSelected={
                 selectedItem
@@ -57,18 +64,6 @@ export default function PreferenceScreen({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    textAlign: 'center',
-    color: '#000000',
-  },
   content: {
     flex: 1,
     paddingHorizontal: 10,
@@ -76,6 +71,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
+    width: '100%',
+    marginBottom: 40,
     alignSelf: 'flex-end',
     justifyContent: 'flex-end',
   },

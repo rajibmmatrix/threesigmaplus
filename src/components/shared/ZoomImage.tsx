@@ -1,6 +1,6 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import {
-  Image,
+  ImageStyle,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -8,24 +8,30 @@ import {
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {useNavigation} from '@react-navigation/native';
+import {Image} from '~common';
 import {COLORS, Icons} from '~constants';
 import {StackScreenProps} from 'types';
 
 interface Props {
-  uri: string;
+  uri?: string;
+  source?: any;
   style?: ViewStyle;
+  imageStyle?: ImageStyle;
 }
 
-const ZoomImage: FC<Props> = ({uri, style}) => {
+const ZoomImage: FC<Props> = ({uri, source, style, imageStyle}) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate('Zoom', {image: uri});
+    navigation.navigate('Zoom', {image: uri!});
   };
 
   return (
-    <TouchableOpacity onPress={handlePress} style={[styles.image, style]}>
-      <Image source={{uri: uri}} style={styles.image} resizeMode="contain" />
+    <TouchableOpacity
+      onPress={handlePress}
+      disabled={!uri}
+      style={[styles.image, style]}>
+      <Image uri={uri} source={source} style={imageStyle} />
     </TouchableOpacity>
   );
 };

@@ -1,32 +1,36 @@
-/* eslint-disable react/no-unstable-nested-components */
-import React, {FC, memo} from 'react';
+import React, {FC, memo, useCallback, useMemo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {PieChart} from 'react-native-gifted-charts';
 import {COLORS, FONTS} from '~constants';
 
 interface Props {
-  title: string;
+  title?: string;
+  number?: string | number;
+  color?: string;
 }
 
-const pieData = [
-  {value: 70, color: '#177AD5'},
-  {value: 30, color: 'lightgray'},
-];
+const RoundBar: FC<Props> = ({title, number = '0', color = COLORS.bar}) => {
+  const data = useMemo(
+    () => [
+      {value: parseInt(number as string, 10), color},
+      {value: 100 - parseInt(number as string, 10), color: 'lightgray'},
+    ],
+    [color, number],
+  );
 
-const CenterText = memo(({number = '0'}: {number: string | number}) => {
-  return <Text style={styles.desc}>{number}%</Text>;
-});
+  const centerLabel = useCallback(() => {
+    return <Text style={styles.desc}>{number}%</Text>;
+  }, [number]);
 
-const RoundBar: FC<Props> = ({title}) => {
   return (
     <View style={styles.container}>
       <View>
         <PieChart
           donut
+          data={data}
           radius={32}
           innerRadius={25}
-          data={pieData}
-          centerLabelComponent={() => <CenterText number="80" />}
+          centerLabelComponent={centerLabel}
         />
       </View>
       <Text style={styles.title}>{title}</Text>
@@ -42,7 +46,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: '400',
     fontFamily: FONTS.RobotoRegular,
     color: COLORS.primary_text,
     textAlign: 'center',
@@ -50,7 +53,6 @@ const styles = StyleSheet.create({
   },
   desc: {
     fontSize: 14,
-    fontWeight: '500',
     fontFamily: FONTS.RobotoMedium,
     color: COLORS.primary_text,
   },

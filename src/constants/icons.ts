@@ -1,10 +1,44 @@
 export {default as Close} from '../assets/icons/close.svg';
+export {default as ArrowLeft} from '../assets/icons/arrow-left.svg';
 export {default as Rotate} from '../assets/icons/rotate.svg';
+export {default as Camera} from '../assets/icons/camera.svg';
 export {default as Eye} from '../assets/icons/eye.svg';
+export {default as EyeSlash} from '../assets/icons/eye-slash.svg';
+export {default as GoogleIcon} from '../assets/icons/google_icon.svg';
+export {default as Key} from '../assets/icons/key.svg';
+export {default as Lampon} from '../assets/icons/lamp-on.svg';
+export {default as Logout} from '../assets/icons/login.svg';
+export {default as Profile} from '../assets/icons/profile.svg';
+export {default as Performance} from '../assets/icons/performance.svg';
+export {default as ArrowDown} from '../assets/icons/arrow-down.svg';
+export {default as Search} from '../assets/icons/search.svg';
+export {default as Notes} from '../assets/icons/notes.svg';
+export {default as Clock} from '../assets/icons/clock.svg';
+export {default as Stars} from '../assets/icons/stars.svg';
+export {default as Info} from '../assets/icons/info.svg';
+export {default as Report} from '../assets/icons/report.svg';
+export {default as CloseSquare} from '../assets/icons/close-square.svg';
+export {default as ArrowRight} from '../assets/icons/arrow-right.svg';
+export {default as CloseModal} from '../assets/icons/modal_close.svg';
+export {default as DownArrow} from '../assets/icons/down_arrow.svg';
+export {default as UpArrow} from '../assets/icons/arrow-up.svg';
+export {default as Tick} from '../assets/icons/tick.svg';
+export {default as Logo} from '../assets/icons/logo.svg';
 
 //For bottom Tab
 export {default as ActiveHome} from '../assets/icons/home_active.svg';
+export {default as ActiveBell} from '../assets/icons/bell_active.svg';
+export {default as ActiveUser} from '../assets/icons/user_active.svg';
+export {default as ActiveSubject} from '../assets/icons/subject_active.svg';
+export {default as ActiveMore} from '../assets/icons/category_active.svg';
+
+export {default as Home} from '../assets/icons/home.svg';
 export {default as Bell} from '../assets/icons/bell.svg';
 export {default as User} from '../assets/icons/user.svg';
 export {default as Subject} from '../assets/icons/subject.svg';
 export {default as More} from '../assets/icons/more.svg';
+export {default as ClockNew} from '../assets/icons/ClockNew.svg';
+export {default as TickSquare} from '../assets/icons/tick-square.svg';
+export {default as CloseSquareSecond} from '../assets/icons/close-square-second.svg';
+export {default as Next} from '../assets/icons/next.svg';
+export {default as Microscope} from '../assets/icons/microscope.svg';

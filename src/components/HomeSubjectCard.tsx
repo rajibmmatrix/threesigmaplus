@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {BarChart} from 'react-native-gifted-charts';
 import {COLORS, FONTS} from '~constants';
 import {_styles} from '~shared';
+import {swidth} from '~utils';
 
 interface Props {
   title: string;
@@ -23,16 +24,19 @@ const HomeSubjectCard: FC<Props> = ({title, descripton}) => {
   return (
     <View style={[styles.container, _styles.shadow]}>
       <Text style={styles.title}>{title}</Text>
-      <View style={_styles.selfCenter}>
+      <View style={[_styles.selfCenter, _styles.alignCenter]}>
         <BarChart
-          height={150}
-          barWidth={20}
+          height={120}
+          width={swidth - 100}
+          barWidth={14}
           noOfSections={3}
           barBorderRadius={4}
-          frontColor="#0071E3"
+          frontColor={COLORS.primary}
           data={barData}
           yAxisThickness={0}
           xAxisThickness={0}
+          xAxisLabelTextStyle={{color: COLORS.dark}}
+          yAxisTextStyle={{color: COLORS.dark}}
         />
       </View>
       <Text style={styles.descripton}>{descripton}</Text>
@@ -44,19 +48,20 @@ export default memo(HomeSubjectCard);
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    padding: 10,
     marginBottom: 20,
-    paddingVertical: 10,
+    backgroundColor: COLORS.background,
+    borderRadius: 5,
   },
   title: {
     fontSize: 16,
-    fontWeight: '400',
     fontFamily: FONTS.RobotoRegular,
     color: COLORS.primary_text,
     marginBottom: 10,
   },
   descripton: {
     fontSize: 12,
-    fontWeight: '400',
     fontFamily: FONTS.RobotoRegular,
     color: COLORS.primary_text,
     textAlign: 'center',

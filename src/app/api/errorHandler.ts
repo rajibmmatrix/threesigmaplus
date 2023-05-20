@@ -1,7 +1,7 @@
 import {isRejectedWithValue} from '@reduxjs/toolkit';
 import type {MiddlewareAPI, Middleware} from '@reduxjs/toolkit';
 import {logout} from '~app';
-import {storage} from '~utils';
+import {log, reset, storage} from '~utils';
 
 /**
  * error Handle middleware
@@ -13,8 +13,9 @@ export const errorHandler: Middleware =
       if (action.payload.status === 401) {
         await storage.removeToken();
         _api.dispatch(logout());
+        reset('Login');
       }
-      console.log('error: ', action.payload.data);
+      log('error: ', action?.payload?.data);
     }
 
     return next(action);

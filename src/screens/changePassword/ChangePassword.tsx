@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Keyboard, StyleSheet, View} from 'react-native';
-import {Button, Container, Input} from '~common';
+import {Button, Container, Header, Input} from '~components';
 import {useChangePasswordMutation} from '~services';
-import {isPassword} from '~utils';
+import {error_message, isPassword, showError, showMessage} from '~utils';
 import {IChangePassword, StackScreenProps} from 'types';
 
 interface IErrors {
@@ -59,9 +59,21 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
     if (isHaveError) {
       return;
     }
-    const {confirm_password: _, ...params} = form;
-    console.log(_);
-    update(params);
+    update({old_password: form.old_password, new_password: form.new_password})
+      .unwrap()
+      .then(() => showMessage('Password changed successfully'))
+      .catch(err => {
+        if (!err?.data) {
+          return showError(error_message);
+        }
+        for (const key in err?.data) {
+          if (Object.prototype.hasOwnProperty.call(err?.data, key)) {
+            let _key = key;
+            const element = err?.data[key];
+            setErrors(prev => ({...prev, [_key]: element}));
+          }
+        }
+      });
   };
 
   const handleChange = (key: string, value: string) => {
@@ -74,31 +86,29 @@ export default function ChangePasswordScreen({}: StackScreenProps<'ChangePasswor
 
   return (
     <Container isLoading={isLoading}>
+      <Header title="Change Password" />
       <View style={styles.container}>
         <Input
           label="Old Password"
-          placeholder="Enter old password"
-          onChangeText={e => handleChange('old_password', e)}
-          secureTextEntry
+          isPassword
           autoCapitalize="none"
+          onChangeText={e => handleChange('old_password', e)}
           value={form.old_password}
           error={errors?.old_password}
         />
         <Input
           label="New Password"
-          placeholder="Enter new password"
-          onChangeText={e => handleChange('new_password', e)}
-          secureTextEntry
+          isPassword
           autoCapitalize="none"
+          onChangeText={e => handleChange('new_password', e)}
           value={form.new_password}
           error={errors?.new_password}
         />
         <Input
           label="Re-type Password"
-          placeholder="Re-type password"
-          onChangeText={e => handleChange('confirm_password', e)}
-          secureTextEntry
+          isPassword
           autoCapitalize="none"
+          onChangeText={e => handleChange('confirm_password', e)}
           value={form.confirm_password}
           error={errors?.confirm_password}
         />
@@ -112,11 +122,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   button: {
     marginTop: 30,
-    marginRight: 10,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
   },
 });

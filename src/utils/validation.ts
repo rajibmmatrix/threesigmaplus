@@ -4,3 +4,7 @@ export function isPassword(params: string): boolean {
   }
   return true;
 }
+
+export function isValidEmail(params: string): boolean {
+  return new RegExp('.+@[^@]+.[^@]{2,}$').test(params);
+}

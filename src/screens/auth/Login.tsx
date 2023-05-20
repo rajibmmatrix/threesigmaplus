@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
-import {Button, Container, Input, Link} from '~common';
+import {CommonActions} from '@react-navigation/native';
+import {Button, Container, GoogleButton, Input, Link, Space} from '~components';
 import {COLORS, FONTS, IMAGES} from '~constants';
 import {setCredentials, useDispatch} from '~app';
 import {useLoginMutation} from '~services';
-import {isPassword} from '~utils';
+import {isPassword, showError, swidth} from '~utils';
 import {ILogin, StackScreenProps} from 'types';
 
 interface IErrors {
@@ -14,8 +15,8 @@ interface IErrors {
 
 export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
   const dispatch = useDispatch();
+  const [login, {isLoading}] = useLoginMutation();
 
-  const [login, {isLoading, isError, error}] = useLoginMutation();
   const [form, setform] = useState<ILogin>({username: '', password: ''});
   const [errors, setErrors] = useState<IErrors>({});
 
@@ -41,8 +42,11 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
       .unwrap()
       .then(({user, token}) => {
         dispatch(setCredentials({user, token}));
+        navigation.dispatch(
+          CommonActions.reset({index: 1, routes: [{name: 'Tab'}]}),
+        );
       })
-      .catch((err: any) => console.log('Err:', err?.data));
+      .catch((err: any) => showError(err?.data?.non_field_errors[0]));
   };
 
   const handleChange = (name: string, value: string) => {
@@ -58,17 +62,15 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
       <Image source={IMAGES.auth} style={styles.banner} />
       <Text style={styles.title}>Welcome back!</Text>
       <View style={styles.body}>
-        {isError ? <Text>{JSON.stringify(error)}</Text> : null}
         <Input
           label="Username"
-          placeholder="Enter username"
           value={form.username}
           autoCapitalize="none"
           onChangeText={e => handleChange('username', e)}
           error={errors?.username}
         />
         <Input
-          placeholder="Password"
+          label="Password"
           value={form.password}
           autoCapitalize="none"
           isPassword
@@ -87,6 +89,8 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
           onPress={handleLogin}
           style={styles.link}
         />
+        <Space height={25} />
+        <GoogleButton title="Log in with Google" onPress={() => {}} />
         <Link
           text="Don't have account? "
           link="Create now"
@@ -102,15 +106,15 @@ export default function LoginScreen({navigation}: StackScreenProps<'Login'>) {
 
 const styles = StyleSheet.create({
   banner: {
-    height: 250,
-    width: '90%',
-    resizeMode: 'stretch',
+    marginTop: 20,
+    height: swidth - 120,
+    width: swidth - 120,
+    resizeMode: 'contain',
     alignSelf: 'center',
   },
   title: {
     fontSize: 26,
-    fontWeight: '400',
-    fontFamily: FONTS.InterRegular,
+    fontFamily: FONTS.RobotoRegular,
     textAlign: 'center',
     color: COLORS.primary_title,
   },

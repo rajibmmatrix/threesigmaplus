@@ -12,7 +12,7 @@ interface Props {
   title: string;
   description?: string;
   onPress?: () => void;
-  containerStyle?: ViewStyle;
+  containerStyle?: ViewStyle | ViewStyle[];
 }
 
 const HomeTitle: FC<Props> = ({
@@ -43,14 +43,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '500',
     fontFamily: FONTS.RobotoMedium,
     color: COLORS.primary_text,
   },
   description: {
     fontSize: 14,
-    fontWeight: '400',
     fontFamily: FONTS.RobotoRegular,
-    color: COLORS.primary_button,
+    color: COLORS.primary,
   },
 });

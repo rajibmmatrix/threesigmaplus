@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {FC, PropsWithChildren, memo} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,9 +7,9 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {COLORS} from '~constants';
+import {COLORS, FONTS, Icons} from '~constants';
 
-interface Props {
+interface Props extends PropsWithChildren {
   label?: string;
   isChecked: boolean;
   labelStyle?: TextStyle;
@@ -25,17 +25,23 @@ const Checkbox: FC<Props> = ({
   isChecked = false,
   error,
   onPress,
+  children,
 }) => {
   return (
     <View style={containerStyle}>
-      <TouchableOpacity onPress={onPress} style={[styles.container]}>
-        {isChecked ? (
-          <View style={[styles.checkbox, styles.checkedbox]} />
-        ) : (
-          <View style={styles.checkbox} />
-        )}
-        <Text style={[styles.title, labelStyle]}>{label}</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={onPress}>
+          {isChecked ? (
+            <Icons.Tick height={20} width={20} />
+          ) : (
+            <View style={styles.checkbox} />
+          )}
+        </TouchableOpacity>
+        <Text style={[styles.title, labelStyle]}>
+          {label}
+          {children}
+        </Text>
+      </View>
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
@@ -45,30 +51,29 @@ export default memo(Checkbox);
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
   },
   title: {
-    fontSize: 11,
-    fontWeight: '400',
-    color: COLORS.dark,
+    fontSize: 13,
+    fontFamily: FONTS.RobotoRegular,
+    color: COLORS.primary_gray,
     marginLeft: 10,
   },
   checkbox: {
-    width: 10,
-    height: 10,
+    width: 18,
+    height: 18,
     backgroundColor: COLORS.light,
     borderWidth: 1,
-    borderColor: COLORS.dark,
-    borderRadius: 2,
-  },
-  checkedbox: {
-    backgroundColor: COLORS.dark,
+    borderColor: COLORS.primary_text,
+    borderRadius: 4,
+    marginTop: 2,
+    marginRight: 2,
   },
   error: {
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.error,
-    marginTop: 6,
+    marginTop: 5,
   },
 });

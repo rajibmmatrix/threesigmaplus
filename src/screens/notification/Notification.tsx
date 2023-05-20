@@ -1,25 +1,30 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
+import {Container, Header, Notification, Space} from '~components';
+import {TabScreenProps} from 'types';
 
-export default function NotificationScreen() {
+export default function NotificationScreen({}: TabScreenProps<'Notification'>) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Notification Screen</Text>
-    </View>
+    <Container scrollEnabled={false}>
+      <Header title="Notification" back={false} />
+      <FlatList
+        data={[1, 2]}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(_item, i) => i.toString()}
+        renderItem={({}) => (
+          <Notification message="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doincididunt ut labore et dolore magna aliqua." />
+        )}
+        contentContainerStyle={styles.container}
+      />
+      <Space height={60} />
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    textAlign: 'center',
-    color: '#000000',
+    paddingTop: 20,
+    paddingHorizontal: 15,
   },
 });

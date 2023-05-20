@@ -1,52 +1,52 @@
-import React, {useEffect} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {IMAGES} from '~constants';
+import React, {useEffect, useRef} from 'react';
+import {Animated} from 'react-native';
+import {Container, _styles} from '~components';
+import {Icons} from '~constants';
 import {setToken, setUser, useDispatch} from '~app';
 import {useLazyGetProfileQuery} from '~services';
-import {storage} from '~utils';
+import {delay, storage} from '~utils';
+import {StackScreenProps} from 'types';
 
-type Props = {
-  onFinished: () => void;
-};
-
-export default function SplashScreen({onFinished}: Props): JSX.Element {
+export default function SplashScreen({navigation}: StackScreenProps<'Splash'>) {
   const dispatch = useDispatch();
   const [getProfile] = useLazyGetProfileQuery();
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  }, [opacity]);
 
   useEffect(() => {
     (async () => {
       try {
+        await delay(3);
         const token = await storage.getToken();
         if (token) {
           await dispatch(setToken(token));
-          await getProfile()
+          return await getProfile()
             .unwrap()
-            .then(res => dispatch(setUser(res)));
+            .then(res => {
+              dispatch(setUser(res));
+              navigation.replace('Tab');
+            });
         }
-        onFinished();
+        navigation.replace('Login');
       } catch (error) {
-        onFinished();
-        console.log(error);
+        navigation.replace('Login');
       }
     })();
     return () => {};
-  }, [dispatch, getProfile, onFinished]);
+  }, [dispatch, getProfile, navigation]);
 
   return (
-    <View style={styles.container}>
-      <Image source={IMAGES.splash} style={styles.image} />
-    </View>
+    <Container scrollEnabled={false}>
+      <Animated.View style={[_styles.flex, _styles.allCenter, {opacity}]}>
+        <Icons.Logo width={220} height={175} />
+      </Animated.View>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-});

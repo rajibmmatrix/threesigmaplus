@@ -1,11 +1,26 @@
 import React, {useState} from 'react';
 import {Image, Keyboard, StyleSheet, Text, View} from 'react-native';
-import {Button, Checkbox, Container, Input, Link} from '~common';
+import {CommonActions} from '@react-navigation/native';
+import {
+  Button,
+  Checkbox,
+  Container,
+  GoogleButton,
+  Input,
+  Link,
+  Space,
+} from '~components';
 import {COLORS, FONTS, IMAGES} from '~constants';
 import {setCredentials, setIsSignup, useDispatch} from '~app';
 import {useSignupMutation} from '~services';
+import {
+  error_message,
+  isPassword,
+  isValidEmail,
+  showError,
+  swidth,
+} from '~utils';
 import {ISignup, StackScreenProps} from 'types';
-import {isPassword} from '~utils';
 
 interface IErrors {
   first_name?: string;
@@ -19,8 +34,8 @@ interface IErrors {
 
 export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
   const dispatch = useDispatch();
+  const [signup, {isLoading}] = useSignupMutation();
 
-  const [signup, {isLoading, isError, error}] = useSignupMutation();
   const [errors, setErrors] = useState<IErrors>({});
   const [tandc, setTandc] = useState<boolean>(false);
   const [form, setform] = useState<ISignup>({
@@ -59,6 +74,9 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
     if (!form.email) {
       isHaveError = true;
       handleError('email', 'Please enter email');
+    } else if (!isValidEmail(form.email)) {
+      isHaveError = true;
+      handleError('email', 'Please enter a valid email');
     }
     if (!form.password1) {
       isHaveError = true;
@@ -86,26 +104,36 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
       .then(({token, user}) => {
         dispatch(setIsSignup(true));
         dispatch(setCredentials({token, user}));
+        navigation.dispatch(
+          CommonActions.reset({index: 1, routes: [{name: 'Tab'}]}),
+        );
       })
-      .catch((err: any) => console.log('Err:', err?.data));
+      .catch((err: any) => {
+        if (!err.data) {
+          showError(error_message);
+        }
+        for (const key in err?.data) {
+          if (Object.prototype.hasOwnProperty.call(err?.data, key)) {
+            const element = err?.data[key];
+            setErrors(prev => ({...prev, [key]: element[0]}));
+          }
+        }
+      });
   };
 
   return (
     <Container isLoading={isLoading}>
       <Image source={IMAGES.auth} style={styles.banner} />
-      <Text style={styles.title}>CREATE YOUR ACCOUNT</Text>
-      {isError ? <Text>{JSON.stringify(error)}</Text> : null}
+      <Text style={styles.title}>Create Your Account</Text>
       <View style={styles.body}>
         <Input
           label="First Name"
-          placeholder="Enter your first name"
           onChangeText={e => handleChange('first_name', e)}
           value={form.first_name}
           error={errors?.first_name}
         />
         <Input
           label="Last Name"
-          placeholder="Enter your last name"
           value={form.last_name}
           error={errors?.last_name}
           containerStyle={styles.input}
@@ -113,7 +141,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Username"
-          placeholder="Enter username"
           value={form.username}
           error={errors?.username}
           autoCapitalize="none"
@@ -122,7 +149,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Email"
-          placeholder="Enter Email"
           value={form.email}
           error={errors?.email}
           autoCapitalize="none"
@@ -131,7 +157,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Password"
-          placeholder="Enter Password"
           value={form.password1}
           error={errors?.password1}
           autoCapitalize="none"
@@ -141,7 +166,6 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
         />
         <Input
           label="Re-type Password"
-          placeholder="Re-type your password"
           value={form.password2}
           error={errors?.password2}
           autoCapitalize="none"
@@ -149,19 +173,34 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
           onChangeText={e => handleChange('password2', e)}
           containerStyle={styles.input}
         />
+        <Space height={15} />
         <Checkbox
           isChecked={tandc}
           onPress={() => setTandc(prev => !prev)}
-          label="I agree to the terms and condition and privacy policy of 3 Sigma Plus"
+          label="I agree to the "
           containerStyle={styles.checkbox}
-          error={errors.checkedTandS}
-        />
+          error={errors.checkedTandS}>
+          <Text
+            onPress={() => navigation.navigate('Terms')}
+            style={styles.subLink}>
+            terms and condition
+          </Text>{' '}
+          and{' '}
+          <Text
+            onPress={() => navigation.navigate('Policy')}
+            style={styles.subLink}>
+            privacy policy
+          </Text>{' '}
+          of 3 Sigma Plus
+        </Checkbox>
         <Button
-          title="Sign up"
+          title="Signup"
           loading={isLoading}
           onPress={handleSignup}
           style={styles.link}
         />
+        <Space height={25} />
+        <GoogleButton title="Sign up with Google" onPress={() => {}} />
         <Link
           text="Already have an account? "
           link="Login"
@@ -177,18 +216,18 @@ export default function SignupScreen({navigation}: StackScreenProps<'Signup'>) {
 
 const styles = StyleSheet.create({
   banner: {
-    height: 200,
-    width: '80%',
-    resizeMode: 'stretch',
+    marginTop: 20,
+    width: swidth - 120,
+    height: swidth - 120,
+    resizeMode: 'contain',
     alignSelf: 'center',
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: '400',
-    fontFamily: FONTS.InterRegular,
-    textAlign: 'center',
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.primary_title,
+    textAlign: 'center',
   },
   body: {
     paddingTop: 20,
@@ -196,8 +235,9 @@ const styles = StyleSheet.create({
   },
   input: {marginTop: 10},
   checkbox: {
+    paddingLeft: 10,
+    paddingRight: 20,
     marginVertical: 5,
-    paddingHorizontal: 10,
   },
   link: {
     marginTop: 20,
@@ -206,5 +246,9 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 16,
     fontFamily: FONTS.RobotoRegular,
+  },
+  subLink: {
+    fontFamily: FONTS.RobotoMedium,
+    color: COLORS.primary_title,
   },
 });

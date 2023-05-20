@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -9,76 +8,61 @@ import {
   ProfileScreen,
   SubjectsScreen,
 } from '~screens';
-import {BottomTab} from '~components';
-import {COLORS, Icons} from '~constants';
+import {ActiveSessionModal, BottomTab} from '~components';
+import {COLORS} from '~constants';
 import {StackScreenProps, TabParamList} from 'types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function TabNavigation({}: StackScreenProps<'Tab'>) {
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarStyle: styles.tabContainer,
-      }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
+    <>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
           headerShown: false,
-          tabBarIcon: Icons.ActiveHome,
-          tabBarButton: props => (
-            <BottomTab title="Home" Icon={Icons.ActiveHome} {...props} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Notification"
-        component={NotificationScreen}
-        options={{
-          tabBarIcon: Icons.Bell,
-          tabBarButton: props => (
-            <BottomTab
-              title="Notification"
-              Icon={Icons.ActiveHome}
-              {...props}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: Icons.User,
-          tabBarButton: props => (
-            <BottomTab title="Profile" Icon={Icons.ActiveHome} {...props} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Subjects"
-        component={SubjectsScreen}
-        options={{
-          tabBarIcon: Icons.Subject,
-          tabBarButton: props => (
-            <BottomTab title="Subjects" Icon={Icons.ActiveHome} {...props} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="More"
-        component={MoreScreen}
-        options={{
-          tabBarIcon: Icons.More,
-          tabBarButton: props => (
-            <BottomTab title="More" Icon={Icons.ActiveHome} {...props} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+          tabBarShowLabel: false,
+          tabBarButton: BottomTab,
+          tabBarStyle: styles.tabContainer,
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarAccessibilityLabel: 'Home',
+          }}
+        />
+        <Tab.Screen
+          name="Notification"
+          component={NotificationScreen}
+          options={{
+            tabBarAccessibilityLabel: 'Notify',
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarAccessibilityLabel: 'Profile',
+          }}
+        />
+        <Tab.Screen
+          name="Subjects"
+          component={SubjectsScreen}
+          options={{
+            tabBarAccessibilityLabel: 'Subjects',
+          }}
+        />
+        <Tab.Screen
+          name="More"
+          component={MoreScreen}
+          options={{
+            tabBarAccessibilityLabel: 'More',
+          }}
+        />
+      </Tab.Navigator>
+      <ActiveSessionModal />
+    </>
   );
 }
 
@@ -87,7 +71,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: 65,
+    minHeight: 65,
     borderWidth: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0,

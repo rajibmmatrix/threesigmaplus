@@ -44,11 +44,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontWeight: '400',
-    fontFamily: FONTS.InterRegular,
+    fontFamily: FONTS.RobotoRegular,
     color: COLORS.primary_title,
   },
   link: {
-    color: COLORS.primary_button,
+    color: COLORS.primary,
   },
 });
