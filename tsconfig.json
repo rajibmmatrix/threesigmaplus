@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "baseUrl": ".",
+    "paths": {
+      "types": ["./src/types"],
+      "~app": ["./src/app/index"],
+      "~assets/*": ["./src/assets/*"],
+      "~components": ["./src/components/index"],
+      "~common": ["./src/components/common/index"],
+      "~shared": ["./src/components/shared/index"],
+      "~config": ["./src/config/config"],
+      "~constants": ["./src/constants/index"],
+      "~navigations": ["./src/navigations/index"],
+      "~screens": ["./src/screens/index"],
+      "~services": ["./src/services/index"],
+      "~utils": ["./src/utils/index"],
+      "~src/*": ["./src/*"],
+    },
+  },
+}
